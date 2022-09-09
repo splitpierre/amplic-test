@@ -27,6 +27,8 @@ import { ProjectFindUniqueArgs } from "./ProjectFindUniqueArgs";
 import { Project } from "./Project";
 import { CategoryFindManyArgs } from "../../category/base/CategoryFindManyArgs";
 import { Category } from "../../category/base/Category";
+import { ProposalFindManyArgs } from "../../proposal/base/ProposalFindManyArgs";
+import { Proposal } from "../../proposal/base/Proposal";
 import { ProjectService } from "../project.service";
 
 @graphql.Resolver(() => Project)
@@ -160,6 +162,26 @@ export class ProjectResolverBase {
     @graphql.Args() args: CategoryFindManyArgs
   ): Promise<Category[]> {
     const results = await this.service.findCategories(parent.id, args);
+
+    if (!results) {
+      return [];
+    }
+
+    return results;
+  }
+
+  @common.UseInterceptors(AclFilterResponseInterceptor)
+  @graphql.ResolveField(() => [Proposal])
+  @nestAccessControl.UseRoles({
+    resource: "Proposal",
+    action: "read",
+    possession: "any",
+  })
+  async proposals(
+    @graphql.Parent() parent: Project,
+    @graphql.Args() args: ProposalFindManyArgs
+  ): Promise<Proposal[]> {
+    const results = await this.service.findProposals(parent.id, args);
 
     if (!results) {
       return [];

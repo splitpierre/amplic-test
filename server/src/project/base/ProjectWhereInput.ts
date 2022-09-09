@@ -16,6 +16,7 @@ import { ValidateNested, IsOptional } from "class-validator";
 import { Type } from "class-transformer";
 import { StringFilter } from "../../util/StringFilter";
 import { StringNullableFilter } from "../../util/StringNullableFilter";
+import { ProposalListRelationFilter } from "../../proposal/base/ProposalListRelationFilter";
 @InputType()
 class ProjectWhereInput {
   @ApiProperty({
@@ -73,5 +74,17 @@ class ProjectWhereInput {
     nullable: true,
   })
   projectName?: StringFilter;
+
+  @ApiProperty({
+    required: false,
+    type: () => ProposalListRelationFilter,
+  })
+  @ValidateNested()
+  @Type(() => ProposalListRelationFilter)
+  @IsOptional()
+  @Field(() => ProposalListRelationFilter, {
+    nullable: true,
+  })
+  proposals?: ProposalListRelationFilter;
 }
 export { ProjectWhereInput };

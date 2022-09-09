@@ -27,6 +27,7 @@ model Project {
   projectDescription String?
   projectIcon        String
   projectName        String
+  proposals          Proposal[]
   updatedAt          DateTime   @updatedAt
 }
 
@@ -34,7 +35,8 @@ model Proposal {
   createdAt        DateTime            @default(now())
   id               String              @id @default(cuid())
   longDescription  String?
-  project          String?
+  project          Project             @relation(fields: [projectId], references: [id])
+  projectId        String
   shortDescription String?
   status           EnumProposalStatus?
   title            String?

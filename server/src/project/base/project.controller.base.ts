@@ -30,6 +30,9 @@ import { Project } from "./Project";
 import { CategoryFindManyArgs } from "../../category/base/CategoryFindManyArgs";
 import { Category } from "../../category/base/Category";
 import { CategoryWhereUniqueInput } from "../../category/base/CategoryWhereUniqueInput";
+import { ProposalFindManyArgs } from "../../proposal/base/ProposalFindManyArgs";
+import { Proposal } from "../../proposal/base/Proposal";
+import { ProposalWhereUniqueInput } from "../../proposal/base/ProposalWhereUniqueInput";
 @swagger.ApiBearerAuth()
 @common.UseGuards(defaultAuthGuard.DefaultAuthGuard, nestAccessControl.ACGuard)
 export class ProjectControllerBase {
@@ -276,6 +279,118 @@ export class ProjectControllerBase {
   ): Promise<void> {
     const data = {
       categories: {
+        disconnect: body,
+      },
+    };
+    await this.service.update({
+      where: params,
+      data,
+      select: { id: true },
+    });
+  }
+
+  @common.UseInterceptors(AclFilterResponseInterceptor)
+  @nestAccessControl.UseRoles({
+    resource: "Proposal",
+    action: "read",
+    possession: "any",
+  })
+  @common.Get("/:id/proposals")
+  @ApiNestedQuery(ProposalFindManyArgs)
+  async findManyProposals(
+    @common.Req() request: Request,
+    @common.Param() params: ProjectWhereUniqueInput
+  ): Promise<Proposal[]> {
+    const query = plainToClass(ProposalFindManyArgs, request.query);
+    const results = await this.service.findProposals(params.id, {
+      ...query,
+      select: {
+        createdAt: true,
+        id: true,
+        longDescription: true,
+
+        project: {
+          select: {
+            id: true,
+          },
+        },
+
+        shortDescription: true,
+        status: true,
+        title: true,
+        updatedAt: true,
+
+        user: {
+          select: {
+            id: true,
+          },
+        },
+      },
+    });
+    if (results === null) {
+      throw new errors.NotFoundException(
+        `No resource was found for ${JSON.stringify(params)}`
+      );
+    }
+    return results;
+  }
+
+  @nestAccessControl.UseRoles({
+    resource: "Project",
+    action: "update",
+    possession: "any",
+  })
+  @common.Post("/:id/proposals")
+  async connectProposals(
+    @common.Param() params: ProjectWhereUniqueInput,
+    @common.Body() body: ProposalWhereUniqueInput[]
+  ): Promise<void> {
+    const data = {
+      proposals: {
+        connect: body,
+      },
+    };
+    await this.service.update({
+      where: params,
+      data,
+      select: { id: true },
+    });
+  }
+
+  @nestAccessControl.UseRoles({
+    resource: "Project",
+    action: "update",
+    possession: "any",
+  })
+  @common.Patch("/:id/proposals")
+  async updateProposals(
+    @common.Param() params: ProjectWhereUniqueInput,
+    @common.Body() body: ProposalWhereUniqueInput[]
+  ): Promise<void> {
+    const data = {
+      proposals: {
+        set: body,
+      },
+    };
+    await this.service.update({
+      where: params,
+      data,
+      select: { id: true },
+    });
+  }
+
+  @nestAccessControl.UseRoles({
+    resource: "Project",
+    action: "update",
+    possession: "any",
+  })
+  @common.Delete("/:id/proposals")
+  async disconnectProposals(
+    @common.Param() params: ProjectWhereUniqueInput,
+    @common.Body() body: ProposalWhereUniqueInput[]
+  ): Promise<void> {
+    const data = {
+      proposals: {
         disconnect: body,
       },
     };

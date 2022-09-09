@@ -49,6 +49,10 @@ export class ProposalControllerBase {
       data: {
         ...data,
 
+        project: {
+          connect: data.project,
+        },
+
         user: data.user
           ? {
               connect: data.user,
@@ -59,7 +63,13 @@ export class ProposalControllerBase {
         createdAt: true,
         id: true,
         longDescription: true,
-        project: true,
+
+        project: {
+          select: {
+            id: true,
+          },
+        },
+
         shortDescription: true,
         status: true,
         title: true,
@@ -92,7 +102,13 @@ export class ProposalControllerBase {
         createdAt: true,
         id: true,
         longDescription: true,
-        project: true,
+
+        project: {
+          select: {
+            id: true,
+          },
+        },
+
         shortDescription: true,
         status: true,
         title: true,
@@ -126,7 +142,13 @@ export class ProposalControllerBase {
         createdAt: true,
         id: true,
         longDescription: true,
-        project: true,
+
+        project: {
+          select: {
+            id: true,
+          },
+        },
+
         shortDescription: true,
         status: true,
         title: true,
@@ -167,6 +189,10 @@ export class ProposalControllerBase {
         data: {
           ...data,
 
+          project: {
+            connect: data.project,
+          },
+
           user: data.user
             ? {
                 connect: data.user,
@@ -177,7 +203,13 @@ export class ProposalControllerBase {
           createdAt: true,
           id: true,
           longDescription: true,
-          project: true,
+
+          project: {
+            select: {
+              id: true,
+            },
+          },
+
           shortDescription: true,
           status: true,
           title: true,
@@ -219,7 +251,13 @@ export class ProposalControllerBase {
           createdAt: true,
           id: true,
           longDescription: true,
-          project: true,
+
+          project: {
+            select: {
+              id: true,
+            },
+          },
+
           shortDescription: true,
           status: true,
           title: true,

@@ -11,6 +11,7 @@ import {
   ReferenceField,
 } from "react-admin";
 
+import { PROJECT_TITLE_FIELD } from "../project/ProjectTitle";
 import { USER_TITLE_FIELD } from "./UserTitle";
 
 export const UserShow = (props: ShowProps): React.ReactElement => {
@@ -34,7 +35,13 @@ export const UserShow = (props: ShowProps): React.ReactElement => {
             <DateField source="createdAt" label="Created At" />
             <TextField label="ID" source="id" />
             <TextField label="Long Description" source="longDescription" />
-            <TextField label="Project" source="project" />
+            <ReferenceField
+              label="Project"
+              source="project.id"
+              reference="Project"
+            >
+              <TextField source={PROJECT_TITLE_FIELD} />
+            </ReferenceField>
             <TextField label="Short Description" source="shortDescription" />
             <TextField label="Status" source="status" />
             <TextField label="Title" source="title" />

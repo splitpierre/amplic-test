@@ -15,10 +15,11 @@ import {
   IsDate,
   IsString,
   IsOptional,
-  IsEnum,
   ValidateNested,
+  IsEnum,
 } from "class-validator";
 import { Type } from "class-transformer";
+import { Project } from "../../project/base/Project";
 import { EnumProposalStatus } from "./EnumProposalStatus";
 import { User } from "../../user/base/User";
 @ObjectType()
@@ -51,15 +52,12 @@ class Proposal {
   longDescription!: string | null;
 
   @ApiProperty({
-    required: false,
-    type: String,
+    required: true,
+    type: () => Project,
   })
-  @IsString()
-  @IsOptional()
-  @Field(() => String, {
-    nullable: true,
-  })
-  project!: string | null;
+  @ValidateNested()
+  @Type(() => Project)
+  project?: Project;
 
   @ApiProperty({
     required: false,

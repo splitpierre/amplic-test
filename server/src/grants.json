@@ -18,13 +18,7 @@
     "attributes": "*"
   },
   {
-    "role": "user",
-    "resource": "User",
-    "action": "create:any",
-    "attributes": "*"
-  },
-  {
-    "role": "voter",
+    "role": "admin",
     "resource": "User",
     "action": "create:any",
     "attributes": "*"
@@ -32,37 +26,7 @@
   {
     "role": "admin",
     "resource": "User",
-    "action": "create:any",
-    "attributes": "*"
-  },
-  {
-    "role": "user",
-    "resource": "User",
     "action": "update:any",
-    "attributes": "*"
-  },
-  {
-    "role": "voter",
-    "resource": "User",
-    "action": "update:any",
-    "attributes": "*"
-  },
-  {
-    "role": "admin",
-    "resource": "User",
-    "action": "update:any",
-    "attributes": "*"
-  },
-  {
-    "role": "user",
-    "resource": "User",
-    "action": "delete:any",
-    "attributes": "*"
-  },
-  {
-    "role": "voter",
-    "resource": "User",
-    "action": "delete:any",
     "attributes": "*"
   },
   {
@@ -187,12 +151,6 @@
   },
   {
     "role": "admin",
-    "resource": "Proposal",
-    "action": "delete:any",
-    "attributes": "*"
-  },
-  {
-    "role": "voter",
     "resource": "Proposal",
     "action": "delete:any",
     "attributes": "*"

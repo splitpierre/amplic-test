@@ -10,6 +10,7 @@ import {
 } from "react-admin";
 
 import { CategoryTitle } from "../category/CategoryTitle";
+import { ProposalTitle } from "../proposal/ProposalTitle";
 
 export const ProjectCreate = (props: CreateProps): React.ReactElement => {
   return (
@@ -30,6 +31,14 @@ export const ProjectCreate = (props: CreateProps): React.ReactElement => {
         />
         <TextInput label="Project Icon" source="projectIcon" />
         <TextInput label="Project Name" source="projectName" />
+        <ReferenceArrayInput
+          source="proposals"
+          reference="Proposal"
+          parse={(value: any) => value && value.map((v: any) => ({ id: v }))}
+          format={(value: any) => value && value.map((v: any) => v.id)}
+        >
+          <SelectArrayInput optionText={ProposalTitle} />
+        </ReferenceArrayInput>
       </SimpleForm>
     </Create>
   );

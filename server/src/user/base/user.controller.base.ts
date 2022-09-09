@@ -218,7 +218,13 @@ export class UserControllerBase {
         createdAt: true,
         id: true,
         longDescription: true,
-        project: true,
+
+        project: {
+          select: {
+            id: true,
+          },
+        },
+
         shortDescription: true,
         status: true,
         title: true,
