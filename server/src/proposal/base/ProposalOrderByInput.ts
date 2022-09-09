@@ -52,7 +52,7 @@ class ProposalOrderByInput {
   @Field(() => SortOrder, {
     nullable: true,
   })
-  projectId?: SortOrder;
+  project?: SortOrder;
 
   @ApiProperty({
     required: false,
@@ -62,6 +62,15 @@ class ProposalOrderByInput {
     nullable: true,
   })
   shortDescription?: SortOrder;
+
+  @ApiProperty({
+    required: false,
+    enum: ["asc", "desc"],
+  })
+  @Field(() => SortOrder, {
+    nullable: true,
+  })
+  status?: SortOrder;
 
   @ApiProperty({
     required: false,

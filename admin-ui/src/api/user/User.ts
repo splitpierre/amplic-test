@@ -4,6 +4,7 @@ import { Proposal } from "../proposal/Proposal";
 export type User = {
   address: string;
   createdAt: Date;
+  favoriteProjects?: Array<Project>;
   firstName: string | null;
   id: string;
   lastName: string | null;

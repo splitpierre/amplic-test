@@ -11,14 +11,38 @@ https://docs.amplication.com/docs/how-to/custom-code
   */
 import { InputType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
-import { StringFilter } from "../../util/StringFilter";
+import { CategoryListRelationFilter } from "../../category/base/CategoryListRelationFilter";
+import { ValidateNested, IsOptional } from "class-validator";
 import { Type } from "class-transformer";
-import { IsOptional, ValidateNested } from "class-validator";
-import { StringNullableFilter } from "../../util/StringNullableFilter";
-import { ProposalListRelationFilter } from "../../proposal/base/ProposalListRelationFilter";
 import { UserWhereUniqueInput } from "../../user/base/UserWhereUniqueInput";
+import { StringFilter } from "../../util/StringFilter";
+import { StringNullableFilter } from "../../util/StringNullableFilter";
 @InputType()
 class ProjectWhereInput {
+  @ApiProperty({
+    required: false,
+    type: () => CategoryListRelationFilter,
+  })
+  @ValidateNested()
+  @Type(() => CategoryListRelationFilter)
+  @IsOptional()
+  @Field(() => CategoryListRelationFilter, {
+    nullable: true,
+  })
+  categories?: CategoryListRelationFilter;
+
+  @ApiProperty({
+    required: false,
+    type: () => UserWhereUniqueInput,
+  })
+  @ValidateNested()
+  @Type(() => UserWhereUniqueInput)
+  @IsOptional()
+  @Field(() => UserWhereUniqueInput, {
+    nullable: true,
+  })
+  favoriteProjects?: UserWhereUniqueInput;
+
   @ApiProperty({
     required: false,
     type: StringFilter,
@@ -62,18 +86,6 @@ class ProjectWhereInput {
     nullable: true,
   })
   projectName?: StringFilter;
-
-  @ApiProperty({
-    required: false,
-    type: () => ProposalListRelationFilter,
-  })
-  @ValidateNested()
-  @Type(() => ProposalListRelationFilter)
-  @IsOptional()
-  @Field(() => ProposalListRelationFilter, {
-    nullable: true,
-  })
-  proposals?: ProposalListRelationFilter;
 
   @ApiProperty({
     required: false,

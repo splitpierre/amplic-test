@@ -147,6 +147,26 @@ export class UserResolverBase {
     action: "read",
     possession: "any",
   })
+  async favoriteProjects(
+    @graphql.Parent() parent: User,
+    @graphql.Args() args: ProjectFindManyArgs
+  ): Promise<Project[]> {
+    const results = await this.service.findFavoriteProjects(parent.id, args);
+
+    if (!results) {
+      return [];
+    }
+
+    return results;
+  }
+
+  @common.UseInterceptors(AclFilterResponseInterceptor)
+  @graphql.ResolveField(() => [Project])
+  @nestAccessControl.UseRoles({
+    resource: "Project",
+    action: "read",
+    possession: "any",
+  })
   async projects(
     @graphql.Parent() parent: User,
     @graphql.Args() args: ProjectFindManyArgs

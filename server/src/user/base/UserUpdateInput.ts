@@ -30,6 +30,18 @@ class UserUpdateInput {
 
   @ApiProperty({
     required: false,
+    type: () => ProjectUpdateManyWithoutUsersInput,
+  })
+  @ValidateNested()
+  @Type(() => ProjectUpdateManyWithoutUsersInput)
+  @IsOptional()
+  @Field(() => ProjectUpdateManyWithoutUsersInput, {
+    nullable: true,
+  })
+  favoriteProjects?: ProjectUpdateManyWithoutUsersInput;
+
+  @ApiProperty({
+    required: false,
     type: String,
   })
   @IsString()

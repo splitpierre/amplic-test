@@ -27,9 +27,9 @@ import { ProjectWhereUniqueInput } from "./ProjectWhereUniqueInput";
 import { ProjectFindManyArgs } from "./ProjectFindManyArgs";
 import { ProjectUpdateInput } from "./ProjectUpdateInput";
 import { Project } from "./Project";
-import { ProposalFindManyArgs } from "../../proposal/base/ProposalFindManyArgs";
-import { Proposal } from "../../proposal/base/Proposal";
-import { ProposalWhereUniqueInput } from "../../proposal/base/ProposalWhereUniqueInput";
+import { CategoryFindManyArgs } from "../../category/base/CategoryFindManyArgs";
+import { Category } from "../../category/base/Category";
+import { CategoryWhereUniqueInput } from "../../category/base/CategoryWhereUniqueInput";
 @swagger.ApiBearerAuth()
 @common.UseGuards(defaultAuthGuard.DefaultAuthGuard, nestAccessControl.ACGuard)
 export class ProjectControllerBase {
@@ -52,6 +52,12 @@ export class ProjectControllerBase {
       data: {
         ...data,
 
+        favoriteProjects: data.favoriteProjects
+          ? {
+              connect: data.favoriteProjects,
+            }
+          : undefined,
+
         user: data.user
           ? {
               connect: data.user,
@@ -60,6 +66,13 @@ export class ProjectControllerBase {
       },
       select: {
         createdAt: true,
+
+        favoriteProjects: {
+          select: {
+            id: true,
+          },
+        },
+
         id: true,
         projectDescription: true,
         projectIcon: true,
@@ -91,6 +104,13 @@ export class ProjectControllerBase {
       ...args,
       select: {
         createdAt: true,
+
+        favoriteProjects: {
+          select: {
+            id: true,
+          },
+        },
+
         id: true,
         projectDescription: true,
         projectIcon: true,
@@ -123,6 +143,13 @@ export class ProjectControllerBase {
       where: params,
       select: {
         createdAt: true,
+
+        favoriteProjects: {
+          select: {
+            id: true,
+          },
+        },
+
         id: true,
         projectDescription: true,
         projectIcon: true,
@@ -164,6 +191,12 @@ export class ProjectControllerBase {
         data: {
           ...data,
 
+          favoriteProjects: data.favoriteProjects
+            ? {
+                connect: data.favoriteProjects,
+              }
+            : undefined,
+
           user: data.user
             ? {
                 connect: data.user,
@@ -172,6 +205,13 @@ export class ProjectControllerBase {
         },
         select: {
           createdAt: true,
+
+          favoriteProjects: {
+            select: {
+              id: true,
+            },
+          },
+
           id: true,
           projectDescription: true,
           projectIcon: true,
@@ -212,6 +252,13 @@ export class ProjectControllerBase {
         where: params,
         select: {
           createdAt: true,
+
+          favoriteProjects: {
+            select: {
+              id: true,
+            },
+          },
+
           id: true,
           projectDescription: true,
           projectIcon: true,
@@ -237,23 +284,22 @@ export class ProjectControllerBase {
 
   @common.UseInterceptors(AclFilterResponseInterceptor)
   @nestAccessControl.UseRoles({
-    resource: "Proposal",
+    resource: "Category",
     action: "read",
     possession: "any",
   })
-  @common.Get("/:id/proposals")
-  @ApiNestedQuery(ProposalFindManyArgs)
-  async findManyProposals(
+  @common.Get("/:id/categories")
+  @ApiNestedQuery(CategoryFindManyArgs)
+  async findManyCategories(
     @common.Req() request: Request,
     @common.Param() params: ProjectWhereUniqueInput
-  ): Promise<Proposal[]> {
-    const query = plainToClass(ProposalFindManyArgs, request.query);
-    const results = await this.service.findProposals(params.id, {
+  ): Promise<Category[]> {
+    const query = plainToClass(CategoryFindManyArgs, request.query);
+    const results = await this.service.findCategories(params.id, {
       ...query,
       select: {
         createdAt: true,
         id: true,
-        longDescription: true,
 
         project: {
           select: {
@@ -261,15 +307,9 @@ export class ProjectControllerBase {
           },
         },
 
-        shortDescription: true,
+        slug: true,
         title: true,
         updatedAt: true,
-
-        user: {
-          select: {
-            id: true,
-          },
-        },
       },
     });
     if (results === null) {
@@ -285,13 +325,13 @@ export class ProjectControllerBase {
     action: "update",
     possession: "any",
   })
-  @common.Post("/:id/proposals")
-  async connectProposals(
+  @common.Post("/:id/categories")
+  async connectCategories(
     @common.Param() params: ProjectWhereUniqueInput,
-    @common.Body() body: ProposalWhereUniqueInput[]
+    @common.Body() body: CategoryWhereUniqueInput[]
   ): Promise<void> {
     const data = {
-      proposals: {
+      categories: {
         connect: body,
       },
     };
@@ -307,13 +347,13 @@ export class ProjectControllerBase {
     action: "update",
     possession: "any",
   })
-  @common.Patch("/:id/proposals")
-  async updateProposals(
+  @common.Patch("/:id/categories")
+  async updateCategories(
     @common.Param() params: ProjectWhereUniqueInput,
-    @common.Body() body: ProposalWhereUniqueInput[]
+    @common.Body() body: CategoryWhereUniqueInput[]
   ): Promise<void> {
     const data = {
-      proposals: {
+      categories: {
         set: body,
       },
     };
@@ -329,13 +369,13 @@ export class ProjectControllerBase {
     action: "update",
     possession: "any",
   })
-  @common.Delete("/:id/proposals")
-  async disconnectProposals(
+  @common.Delete("/:id/categories")
+  async disconnectCategories(
     @common.Param() params: ProjectWhereUniqueInput,
-    @common.Body() body: ProposalWhereUniqueInput[]
+    @common.Body() body: CategoryWhereUniqueInput[]
   ): Promise<void> {
     const data = {
-      proposals: {
+      categories: {
         disconnect: body,
       },
     };

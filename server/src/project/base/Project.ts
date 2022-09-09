@@ -11,12 +11,21 @@ https://docs.amplication.com/docs/how-to/custom-code
   */
 import { ObjectType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
-import { IsDate, IsString, IsOptional, ValidateNested } from "class-validator";
+import { Category } from "../../category/base/Category";
+import { ValidateNested, IsOptional, IsDate, IsString } from "class-validator";
 import { Type } from "class-transformer";
-import { Proposal } from "../../proposal/base/Proposal";
 import { User } from "../../user/base/User";
 @ObjectType()
 class Project {
+  @ApiProperty({
+    required: false,
+    type: () => [Category],
+  })
+  @ValidateNested()
+  @Type(() => Category)
+  @IsOptional()
+  categories?: Array<Category>;
+
   @ApiProperty({
     required: true,
   })
@@ -24,6 +33,15 @@ class Project {
   @Type(() => Date)
   @Field(() => Date)
   createdAt!: Date;
+
+  @ApiProperty({
+    required: false,
+    type: () => User,
+  })
+  @ValidateNested()
+  @Type(() => User)
+  @IsOptional()
+  favoriteProjects?: User | null;
 
   @ApiProperty({
     required: true,
@@ -59,15 +77,6 @@ class Project {
   @IsString()
   @Field(() => String)
   projectName!: string;
-
-  @ApiProperty({
-    required: false,
-    type: () => [Proposal],
-  })
-  @ValidateNested()
-  @Type(() => Proposal)
-  @IsOptional()
-  proposals?: Array<Proposal>;
 
   @ApiProperty({
     required: true,

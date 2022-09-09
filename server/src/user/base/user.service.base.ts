@@ -72,6 +72,17 @@ export class UserServiceBase {
     return this.prisma.user.delete(args);
   }
 
+  async findFavoriteProjects(
+    parentId: string,
+    args: Prisma.ProjectFindManyArgs
+  ): Promise<Project[]> {
+    return this.prisma.user
+      .findUnique({
+        where: { id: parentId },
+      })
+      .favoriteProjects(args);
+  }
+
   async findProjects(
     parentId: string,
     args: Prisma.ProjectFindManyArgs

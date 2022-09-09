@@ -11,12 +11,36 @@ https://docs.amplication.com/docs/how-to/custom-code
   */
 import { InputType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
-import { IsString, IsOptional, ValidateNested } from "class-validator";
-import { ProposalUpdateManyWithoutProjectsInput } from "./ProposalUpdateManyWithoutProjectsInput";
+import { CategoryUpdateManyWithoutProjectsInput } from "./CategoryUpdateManyWithoutProjectsInput";
+import { ValidateNested, IsOptional, IsString } from "class-validator";
 import { Type } from "class-transformer";
 import { UserWhereUniqueInput } from "../../user/base/UserWhereUniqueInput";
 @InputType()
 class ProjectUpdateInput {
+  @ApiProperty({
+    required: false,
+    type: () => CategoryUpdateManyWithoutProjectsInput,
+  })
+  @ValidateNested()
+  @Type(() => CategoryUpdateManyWithoutProjectsInput)
+  @IsOptional()
+  @Field(() => CategoryUpdateManyWithoutProjectsInput, {
+    nullable: true,
+  })
+  categories?: CategoryUpdateManyWithoutProjectsInput;
+
+  @ApiProperty({
+    required: false,
+    type: () => UserWhereUniqueInput,
+  })
+  @ValidateNested()
+  @Type(() => UserWhereUniqueInput)
+  @IsOptional()
+  @Field(() => UserWhereUniqueInput, {
+    nullable: true,
+  })
+  favoriteProjects?: UserWhereUniqueInput | null;
+
   @ApiProperty({
     required: false,
     type: String,
@@ -49,18 +73,6 @@ class ProjectUpdateInput {
     nullable: true,
   })
   projectName?: string;
-
-  @ApiProperty({
-    required: false,
-    type: () => ProposalUpdateManyWithoutProjectsInput,
-  })
-  @ValidateNested()
-  @Type(() => ProposalUpdateManyWithoutProjectsInput)
-  @IsOptional()
-  @Field(() => ProposalUpdateManyWithoutProjectsInput, {
-    nullable: true,
-  })
-  proposals?: ProposalUpdateManyWithoutProjectsInput;
 
   @ApiProperty({
     required: false,

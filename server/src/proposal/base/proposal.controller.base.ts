@@ -49,12 +49,6 @@ export class ProposalControllerBase {
       data: {
         ...data,
 
-        project: data.project
-          ? {
-              connect: data.project,
-            }
-          : undefined,
-
         user: data.user
           ? {
               connect: data.user,
@@ -65,14 +59,9 @@ export class ProposalControllerBase {
         createdAt: true,
         id: true,
         longDescription: true,
-
-        project: {
-          select: {
-            id: true,
-          },
-        },
-
+        project: true,
         shortDescription: true,
+        status: true,
         title: true,
         updatedAt: true,
 
@@ -103,14 +92,9 @@ export class ProposalControllerBase {
         createdAt: true,
         id: true,
         longDescription: true,
-
-        project: {
-          select: {
-            id: true,
-          },
-        },
-
+        project: true,
         shortDescription: true,
+        status: true,
         title: true,
         updatedAt: true,
 
@@ -142,14 +126,9 @@ export class ProposalControllerBase {
         createdAt: true,
         id: true,
         longDescription: true,
-
-        project: {
-          select: {
-            id: true,
-          },
-        },
-
+        project: true,
         shortDescription: true,
+        status: true,
         title: true,
         updatedAt: true,
 
@@ -188,12 +167,6 @@ export class ProposalControllerBase {
         data: {
           ...data,
 
-          project: data.project
-            ? {
-                connect: data.project,
-              }
-            : undefined,
-
           user: data.user
             ? {
                 connect: data.user,
@@ -204,14 +177,9 @@ export class ProposalControllerBase {
           createdAt: true,
           id: true,
           longDescription: true,
-
-          project: {
-            select: {
-              id: true,
-            },
-          },
-
+          project: true,
           shortDescription: true,
+          status: true,
           title: true,
           updatedAt: true,
 
@@ -251,14 +219,9 @@ export class ProposalControllerBase {
           createdAt: true,
           id: true,
           longDescription: true,
-
-          project: {
-            select: {
-              id: true,
-            },
-          },
-
+          project: true,
           shortDescription: true,
+          status: true,
           title: true,
           updatedAt: true,
 

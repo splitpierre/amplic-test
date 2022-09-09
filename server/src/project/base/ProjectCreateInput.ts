@@ -11,12 +11,36 @@ https://docs.amplication.com/docs/how-to/custom-code
   */
 import { InputType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
-import { IsString, IsOptional, ValidateNested } from "class-validator";
-import { ProposalCreateNestedManyWithoutProjectsInput } from "./ProposalCreateNestedManyWithoutProjectsInput";
+import { CategoryCreateNestedManyWithoutProjectsInput } from "./CategoryCreateNestedManyWithoutProjectsInput";
+import { ValidateNested, IsOptional, IsString } from "class-validator";
 import { Type } from "class-transformer";
 import { UserWhereUniqueInput } from "../../user/base/UserWhereUniqueInput";
 @InputType()
 class ProjectCreateInput {
+  @ApiProperty({
+    required: false,
+    type: () => CategoryCreateNestedManyWithoutProjectsInput,
+  })
+  @ValidateNested()
+  @Type(() => CategoryCreateNestedManyWithoutProjectsInput)
+  @IsOptional()
+  @Field(() => CategoryCreateNestedManyWithoutProjectsInput, {
+    nullable: true,
+  })
+  categories?: CategoryCreateNestedManyWithoutProjectsInput;
+
+  @ApiProperty({
+    required: false,
+    type: () => UserWhereUniqueInput,
+  })
+  @ValidateNested()
+  @Type(() => UserWhereUniqueInput)
+  @IsOptional()
+  @Field(() => UserWhereUniqueInput, {
+    nullable: true,
+  })
+  favoriteProjects?: UserWhereUniqueInput | null;
+
   @ApiProperty({
     required: false,
     type: String,
@@ -43,18 +67,6 @@ class ProjectCreateInput {
   @IsString()
   @Field(() => String)
   projectName!: string;
-
-  @ApiProperty({
-    required: false,
-    type: () => ProposalCreateNestedManyWithoutProjectsInput,
-  })
-  @ValidateNested()
-  @Type(() => ProposalCreateNestedManyWithoutProjectsInput)
-  @IsOptional()
-  @Field(() => ProposalCreateNestedManyWithoutProjectsInput, {
-    nullable: true,
-  })
-  proposals?: ProposalCreateNestedManyWithoutProjectsInput;
 
   @ApiProperty({
     required: false,

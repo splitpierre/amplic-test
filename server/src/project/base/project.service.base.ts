@@ -10,7 +10,7 @@ https://docs.amplication.com/docs/how-to/custom-code
 ------------------------------------------------------------------------------
   */
 import { PrismaService } from "nestjs-prisma";
-import { Prisma, Project, Proposal, User } from "@prisma/client";
+import { Prisma, Project, Category, User } from "@prisma/client";
 
 export class ProjectServiceBase {
   constructor(protected readonly prisma: PrismaService) {}
@@ -47,15 +47,23 @@ export class ProjectServiceBase {
     return this.prisma.project.delete(args);
   }
 
-  async findProposals(
+  async findCategories(
     parentId: string,
-    args: Prisma.ProposalFindManyArgs
-  ): Promise<Proposal[]> {
+    args: Prisma.CategoryFindManyArgs
+  ): Promise<Category[]> {
     return this.prisma.project
       .findUnique({
         where: { id: parentId },
       })
-      .proposals(args);
+      .categories(args);
+  }
+
+  async getFavoriteProjects(parentId: string): Promise<User | null> {
+    return this.prisma.project
+      .findUnique({
+        where: { id: parentId },
+      })
+      .favoriteProjects();
   }
 
   async getUser(parentId: string): Promise<User | null> {

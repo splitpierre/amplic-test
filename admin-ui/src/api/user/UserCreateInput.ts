@@ -3,6 +3,7 @@ import { ProposalCreateNestedManyWithoutUsersInput } from "./ProposalCreateNeste
 
 export type UserCreateInput = {
   address: string;
+  favoriteProjects?: ProjectCreateNestedManyWithoutUsersInput;
   firstName?: string | null;
   lastName?: string | null;
   password: string;

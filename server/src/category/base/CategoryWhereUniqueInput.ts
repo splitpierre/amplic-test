@@ -10,17 +10,16 @@ https://docs.amplication.com/docs/how-to/custom-code
 ------------------------------------------------------------------------------
   */
 import { InputType, Field } from "@nestjs/graphql";
-import { ProposalWhereUniqueInput } from "../../proposal/base/ProposalWhereUniqueInput";
 import { ApiProperty } from "@nestjs/swagger";
+import { IsString } from "class-validator";
 @InputType()
-class ProposalCreateNestedManyWithoutProjectsInput {
-  @Field(() => [ProposalWhereUniqueInput], {
-    nullable: true,
-  })
+class CategoryWhereUniqueInput {
   @ApiProperty({
-    required: false,
-    type: () => [ProposalWhereUniqueInput],
+    required: true,
+    type: String,
   })
-  connect?: Array<ProposalWhereUniqueInput>;
+  @IsString()
+  @Field(() => String)
+  id!: string;
 }
-export { ProposalCreateNestedManyWithoutProjectsInput };
+export { CategoryWhereUniqueInput };

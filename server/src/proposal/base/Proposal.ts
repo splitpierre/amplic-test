@@ -11,9 +11,15 @@ https://docs.amplication.com/docs/how-to/custom-code
   */
 import { ObjectType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
-import { IsDate, IsString, IsOptional, ValidateNested } from "class-validator";
+import {
+  IsDate,
+  IsString,
+  IsOptional,
+  IsEnum,
+  ValidateNested,
+} from "class-validator";
 import { Type } from "class-transformer";
-import { Project } from "../../project/base/Project";
+import { EnumProposalStatus } from "./EnumProposalStatus";
 import { User } from "../../user/base/User";
 @ObjectType()
 class Proposal {
@@ -46,12 +52,14 @@ class Proposal {
 
   @ApiProperty({
     required: false,
-    type: () => Project,
+    type: String,
   })
-  @ValidateNested()
-  @Type(() => Project)
+  @IsString()
   @IsOptional()
-  project?: Project | null;
+  @Field(() => String, {
+    nullable: true,
+  })
+  project!: string | null;
 
   @ApiProperty({
     required: false,
@@ -63,6 +71,17 @@ class Proposal {
     nullable: true,
   })
   shortDescription!: string | null;
+
+  @ApiProperty({
+    required: false,
+    enum: EnumProposalStatus,
+  })
+  @IsEnum(EnumProposalStatus)
+  @IsOptional()
+  @Field(() => EnumProposalStatus, {
+    nullable: true,
+  })
+  status?: "Active" | "Pending" | "Closed" | null;
 
   @ApiProperty({
     required: false,

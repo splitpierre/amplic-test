@@ -208,6 +208,117 @@ export class UserControllerBase {
     action: "read",
     possession: "any",
   })
+  @common.Get("/:id/favoriteProjects")
+  @ApiNestedQuery(ProjectFindManyArgs)
+  async findManyFavoriteProjects(
+    @common.Req() request: Request,
+    @common.Param() params: UserWhereUniqueInput
+  ): Promise<Project[]> {
+    const query = plainToClass(ProjectFindManyArgs, request.query);
+    const results = await this.service.findFavoriteProjects(params.id, {
+      ...query,
+      select: {
+        createdAt: true,
+
+        favoriteProjects: {
+          select: {
+            id: true,
+          },
+        },
+
+        id: true,
+        projectDescription: true,
+        projectIcon: true,
+        projectName: true,
+        updatedAt: true,
+
+        user: {
+          select: {
+            id: true,
+          },
+        },
+      },
+    });
+    if (results === null) {
+      throw new errors.NotFoundException(
+        `No resource was found for ${JSON.stringify(params)}`
+      );
+    }
+    return results;
+  }
+
+  @nestAccessControl.UseRoles({
+    resource: "User",
+    action: "update",
+    possession: "any",
+  })
+  @common.Post("/:id/favoriteProjects")
+  async connectFavoriteProjects(
+    @common.Param() params: UserWhereUniqueInput,
+    @common.Body() body: ProjectWhereUniqueInput[]
+  ): Promise<void> {
+    const data = {
+      favoriteProjects: {
+        connect: body,
+      },
+    };
+    await this.service.update({
+      where: params,
+      data,
+      select: { id: true },
+    });
+  }
+
+  @nestAccessControl.UseRoles({
+    resource: "User",
+    action: "update",
+    possession: "any",
+  })
+  @common.Patch("/:id/favoriteProjects")
+  async updateFavoriteProjects(
+    @common.Param() params: UserWhereUniqueInput,
+    @common.Body() body: ProjectWhereUniqueInput[]
+  ): Promise<void> {
+    const data = {
+      favoriteProjects: {
+        set: body,
+      },
+    };
+    await this.service.update({
+      where: params,
+      data,
+      select: { id: true },
+    });
+  }
+
+  @nestAccessControl.UseRoles({
+    resource: "User",
+    action: "update",
+    possession: "any",
+  })
+  @common.Delete("/:id/favoriteProjects")
+  async disconnectFavoriteProjects(
+    @common.Param() params: UserWhereUniqueInput,
+    @common.Body() body: ProjectWhereUniqueInput[]
+  ): Promise<void> {
+    const data = {
+      favoriteProjects: {
+        disconnect: body,
+      },
+    };
+    await this.service.update({
+      where: params,
+      data,
+      select: { id: true },
+    });
+  }
+
+  @common.UseInterceptors(AclFilterResponseInterceptor)
+  @nestAccessControl.UseRoles({
+    resource: "Project",
+    action: "read",
+    possession: "any",
+  })
   @common.Get("/:id/projects")
   @ApiNestedQuery(ProjectFindManyArgs)
   async findManyProjects(
@@ -219,6 +330,13 @@ export class UserControllerBase {
       ...query,
       select: {
         createdAt: true,
+
+        favoriteProjects: {
+          select: {
+            id: true,
+          },
+        },
+
         id: true,
         projectDescription: true,
         projectIcon: true,
@@ -325,14 +443,9 @@ export class UserControllerBase {
         createdAt: true,
         id: true,
         longDescription: true,
-
-        project: {
-          select: {
-            id: true,
-          },
-        },
-
+        project: true,
         shortDescription: true,
+        status: true,
         title: true,
         updatedAt: true,
 
