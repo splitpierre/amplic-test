@@ -8,32 +8,26 @@ generator client {
 }
 
 model User {
-  address          String     @unique
-  createdAt        DateTime   @default(now())
-  favoriteProjects Project[]  @relation(name: "ProjectFavoriteProjectsUserFavoriteProjects")
-  firstName        String?
-  id               String     @id @default(cuid())
-  lastName         String?
-  password         String
-  projects         Project[]  @relation(name: "ProjectsOnUser")
-  proposals        Proposal[]
-  roles            String[]
-  updatedAt        DateTime   @updatedAt
-  username         String     @unique
+  address   String     @unique
+  createdAt DateTime   @default(now())
+  firstName String?
+  id        String     @id @default(cuid())
+  lastName  String?
+  password  String
+  proposals Proposal[]
+  roles     String[]
+  updatedAt DateTime   @updatedAt
+  username  String     @unique
 }
 
 model Project {
   categories         Category[]
   createdAt          DateTime   @default(now())
-  favoriteProjects   User?      @relation(name: "ProjectFavoriteProjectsUserFavoriteProjects", fields: [favoriteProjectsId], references: [id])
-  favoriteProjectsId String?
   id                 String     @id @default(cuid())
   projectDescription String?
   projectIcon        String
   projectName        String
   updatedAt          DateTime   @updatedAt
-  user               User?      @relation(name: "ProjectsOnUser", fields: [userId], references: [id])
-  userId             String?
 }
 
 model Proposal {

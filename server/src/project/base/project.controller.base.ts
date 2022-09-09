@@ -49,41 +49,14 @@ export class ProjectControllerBase {
   @swagger.ApiForbiddenResponse({ type: errors.ForbiddenException })
   async create(@common.Body() data: ProjectCreateInput): Promise<Project> {
     return await this.service.create({
-      data: {
-        ...data,
-
-        favoriteProjects: data.favoriteProjects
-          ? {
-              connect: data.favoriteProjects,
-            }
-          : undefined,
-
-        user: data.user
-          ? {
-              connect: data.user,
-            }
-          : undefined,
-      },
+      data: data,
       select: {
         createdAt: true,
-
-        favoriteProjects: {
-          select: {
-            id: true,
-          },
-        },
-
         id: true,
         projectDescription: true,
         projectIcon: true,
         projectName: true,
         updatedAt: true,
-
-        user: {
-          select: {
-            id: true,
-          },
-        },
       },
     });
   }
@@ -104,24 +77,11 @@ export class ProjectControllerBase {
       ...args,
       select: {
         createdAt: true,
-
-        favoriteProjects: {
-          select: {
-            id: true,
-          },
-        },
-
         id: true,
         projectDescription: true,
         projectIcon: true,
         projectName: true,
         updatedAt: true,
-
-        user: {
-          select: {
-            id: true,
-          },
-        },
       },
     });
   }
@@ -143,24 +103,11 @@ export class ProjectControllerBase {
       where: params,
       select: {
         createdAt: true,
-
-        favoriteProjects: {
-          select: {
-            id: true,
-          },
-        },
-
         id: true,
         projectDescription: true,
         projectIcon: true,
         projectName: true,
         updatedAt: true,
-
-        user: {
-          select: {
-            id: true,
-          },
-        },
       },
     });
     if (result === null) {
@@ -188,41 +135,14 @@ export class ProjectControllerBase {
     try {
       return await this.service.update({
         where: params,
-        data: {
-          ...data,
-
-          favoriteProjects: data.favoriteProjects
-            ? {
-                connect: data.favoriteProjects,
-              }
-            : undefined,
-
-          user: data.user
-            ? {
-                connect: data.user,
-              }
-            : undefined,
-        },
+        data: data,
         select: {
           createdAt: true,
-
-          favoriteProjects: {
-            select: {
-              id: true,
-            },
-          },
-
           id: true,
           projectDescription: true,
           projectIcon: true,
           projectName: true,
           updatedAt: true,
-
-          user: {
-            select: {
-              id: true,
-            },
-          },
         },
       });
     } catch (error) {
@@ -252,24 +172,11 @@ export class ProjectControllerBase {
         where: params,
         select: {
           createdAt: true,
-
-          favoriteProjects: {
-            select: {
-              id: true,
-            },
-          },
-
           id: true,
           projectDescription: true,
           projectIcon: true,
           projectName: true,
           updatedAt: true,
-
-          user: {
-            select: {
-              id: true,
-            },
-          },
         },
       });
     } catch (error) {
