@@ -25,6 +25,7 @@ import { DeleteCategoryArgs } from "./DeleteCategoryArgs";
 import { CategoryFindManyArgs } from "./CategoryFindManyArgs";
 import { CategoryFindUniqueArgs } from "./CategoryFindUniqueArgs";
 import { Category } from "./Category";
+import { ProjectFindManyArgs } from "../../project/base/ProjectFindManyArgs";
 import { Project } from "../../project/base/Project";
 import { CategoryService } from "../category.service";
 
@@ -97,15 +98,7 @@ export class CategoryResolverBase {
   ): Promise<Category> {
     return await this.service.create({
       ...args,
-      data: {
-        ...args.data,
-
-        project: args.data.project
-          ? {
-              connect: args.data.project,
-            }
-          : undefined,
-      },
+      data: args.data,
     });
   }
 
@@ -122,15 +115,7 @@ export class CategoryResolverBase {
     try {
       return await this.service.update({
         ...args,
-        data: {
-          ...args.data,
-
-          project: args.data.project
-            ? {
-                connect: args.data.project,
-              }
-            : undefined,
-        },
+        data: args.data,
       });
     } catch (error) {
       if (isRecordNotFoundError(error)) {
@@ -164,18 +149,22 @@ export class CategoryResolverBase {
   }
 
   @common.UseInterceptors(AclFilterResponseInterceptor)
-  @graphql.ResolveField(() => Project, { nullable: true })
+  @graphql.ResolveField(() => [Project])
   @nestAccessControl.UseRoles({
     resource: "Project",
     action: "read",
     possession: "any",
   })
-  async project(@graphql.Parent() parent: Category): Promise<Project | null> {
-    const result = await this.service.getProject(parent.id);
+  async project(
+    @graphql.Parent() parent: Category,
+    @graphql.Args() args: ProjectFindManyArgs
+  ): Promise<Project[]> {
+    const results = await this.service.findProject(parent.id, args);
 
-    if (!result) {
-      return null;
+    if (!results) {
+      return [];
     }
-    return result;
+
+    return results;
   }
 }

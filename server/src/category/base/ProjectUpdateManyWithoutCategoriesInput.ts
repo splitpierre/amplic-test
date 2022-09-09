@@ -10,58 +10,35 @@ https://docs.amplication.com/docs/how-to/custom-code
 ------------------------------------------------------------------------------
   */
 import { InputType, Field } from "@nestjs/graphql";
+import { ProjectWhereUniqueInput } from "../../project/base/ProjectWhereUniqueInput";
 import { ApiProperty } from "@nestjs/swagger";
-import { SortOrder } from "../../util/SortOrder";
-
-@InputType({
-  isAbstract: true,
-  description: undefined,
-})
-class CategoryOrderByInput {
-  @ApiProperty({
-    required: false,
-    enum: ["asc", "desc"],
-  })
-  @Field(() => SortOrder, {
+@InputType()
+class ProjectUpdateManyWithoutCategoriesInput {
+  @Field(() => [ProjectWhereUniqueInput], {
     nullable: true,
   })
-  createdAt?: SortOrder;
-
   @ApiProperty({
     required: false,
-    enum: ["asc", "desc"],
+    type: () => [ProjectWhereUniqueInput],
   })
-  @Field(() => SortOrder, {
+  connect?: Array<ProjectWhereUniqueInput>;
+
+  @Field(() => [ProjectWhereUniqueInput], {
     nullable: true,
   })
-  id?: SortOrder;
-
   @ApiProperty({
     required: false,
-    enum: ["asc", "desc"],
+    type: () => [ProjectWhereUniqueInput],
   })
-  @Field(() => SortOrder, {
+  disconnect?: Array<ProjectWhereUniqueInput>;
+
+  @Field(() => [ProjectWhereUniqueInput], {
     nullable: true,
   })
-  slug?: SortOrder;
-
   @ApiProperty({
     required: false,
-    enum: ["asc", "desc"],
+    type: () => [ProjectWhereUniqueInput],
   })
-  @Field(() => SortOrder, {
-    nullable: true,
-  })
-  title?: SortOrder;
-
-  @ApiProperty({
-    required: false,
-    enum: ["asc", "desc"],
-  })
-  @Field(() => SortOrder, {
-    nullable: true,
-  })
-  updatedAt?: SortOrder;
+  set?: Array<ProjectWhereUniqueInput>;
 }
-
-export { CategoryOrderByInput };
+export { ProjectUpdateManyWithoutCategoriesInput };

@@ -1,10 +1,10 @@
 import { StringFilter } from "../../util/StringFilter";
-import { ProjectWhereUniqueInput } from "../project/ProjectWhereUniqueInput";
+import { ProjectListRelationFilter } from "../project/ProjectListRelationFilter";
 import { StringNullableFilter } from "../../util/StringNullableFilter";
 
 export type CategoryWhereInput = {
   id?: StringFilter;
-  project?: ProjectWhereUniqueInput;
+  project?: ProjectListRelationFilter;
   slug?: StringNullableFilter;
   title?: StringFilter;
 };

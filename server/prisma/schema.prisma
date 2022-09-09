@@ -44,13 +44,12 @@ model Proposal {
 }
 
 model Category {
-  createdAt DateTime @default(now())
-  id        String   @id @default(cuid())
-  project   Project? @relation(fields: [projectId], references: [id])
-  projectId String?
+  createdAt DateTime  @default(now())
+  id        String    @id @default(cuid())
+  project   Project[]
   slug      String?
   title     String
-  updatedAt DateTime @updatedAt
+  updatedAt DateTime  @updatedAt
 }
 
 enum EnumProposalStatus {

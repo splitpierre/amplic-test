@@ -207,13 +207,6 @@ export class ProjectControllerBase {
       select: {
         createdAt: true,
         id: true,
-
-        project: {
-          select: {
-            id: true,
-          },
-        },
-
         slug: true,
         title: true,
         updatedAt: true,

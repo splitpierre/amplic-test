@@ -34,12 +34,12 @@ class Category {
 
   @ApiProperty({
     required: false,
-    type: () => Project,
+    type: () => [Project],
   })
   @ValidateNested()
   @Type(() => Project)
   @IsOptional()
-  project?: Project | null;
+  project?: Array<Project>;
 
   @ApiProperty({
     required: false,

@@ -1,7 +1,7 @@
-import { ProjectWhereUniqueInput } from "../project/ProjectWhereUniqueInput";
+import { ProjectCreateNestedManyWithoutCategoriesInput } from "./ProjectCreateNestedManyWithoutCategoriesInput";
 
 export type CategoryCreateInput = {
-  project?: ProjectWhereUniqueInput | null;
+  project?: ProjectCreateNestedManyWithoutCategoriesInput;
   slug?: string | null;
   title: string;
 };

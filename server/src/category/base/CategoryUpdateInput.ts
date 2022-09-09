@@ -11,22 +11,22 @@ https://docs.amplication.com/docs/how-to/custom-code
   */
 import { InputType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
-import { ProjectWhereUniqueInput } from "../../project/base/ProjectWhereUniqueInput";
+import { ProjectUpdateManyWithoutCategoriesInput } from "./ProjectUpdateManyWithoutCategoriesInput";
 import { ValidateNested, IsOptional, IsString } from "class-validator";
 import { Type } from "class-transformer";
 @InputType()
 class CategoryUpdateInput {
   @ApiProperty({
     required: false,
-    type: () => ProjectWhereUniqueInput,
+    type: () => ProjectUpdateManyWithoutCategoriesInput,
   })
   @ValidateNested()
-  @Type(() => ProjectWhereUniqueInput)
+  @Type(() => ProjectUpdateManyWithoutCategoriesInput)
   @IsOptional()
-  @Field(() => ProjectWhereUniqueInput, {
+  @Field(() => ProjectUpdateManyWithoutCategoriesInput, {
     nullable: true,
   })
-  project?: ProjectWhereUniqueInput | null;
+  project?: ProjectUpdateManyWithoutCategoriesInput;
 
   @ApiProperty({
     required: false,
