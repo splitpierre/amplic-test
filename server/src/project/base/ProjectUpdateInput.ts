@@ -14,6 +14,7 @@ import { ApiProperty } from "@nestjs/swagger";
 import { CategoryUpdateManyWithoutProjectsInput } from "./CategoryUpdateManyWithoutProjectsInput";
 import { ValidateNested, IsOptional, IsString } from "class-validator";
 import { Type } from "class-transformer";
+import { ProposalUpdateManyWithoutProjectsInput } from "./ProposalUpdateManyWithoutProjectsInput";
 @InputType()
 class ProjectUpdateInput {
   @ApiProperty({
@@ -60,5 +61,17 @@ class ProjectUpdateInput {
     nullable: true,
   })
   projectName?: string;
+
+  @ApiProperty({
+    required: false,
+    type: () => ProposalUpdateManyWithoutProjectsInput,
+  })
+  @ValidateNested()
+  @Type(() => ProposalUpdateManyWithoutProjectsInput)
+  @IsOptional()
+  @Field(() => ProposalUpdateManyWithoutProjectsInput, {
+    nullable: true,
+  })
+  proposals?: ProposalUpdateManyWithoutProjectsInput;
 }
 export { ProjectUpdateInput };

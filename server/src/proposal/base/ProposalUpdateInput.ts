@@ -11,10 +11,11 @@ https://docs.amplication.com/docs/how-to/custom-code
   */
 import { InputType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
-import { IsString, IsOptional, IsEnum, ValidateNested } from "class-validator";
+import { IsString, IsOptional, ValidateNested, IsEnum } from "class-validator";
+import { ProjectWhereUniqueInput } from "../../project/base/ProjectWhereUniqueInput";
+import { Type } from "class-transformer";
 import { EnumProposalStatus } from "./EnumProposalStatus";
 import { UserWhereUniqueInput } from "../../user/base/UserWhereUniqueInput";
-import { Type } from "class-transformer";
 @InputType()
 class ProposalUpdateInput {
   @ApiProperty({
@@ -30,14 +31,15 @@ class ProposalUpdateInput {
 
   @ApiProperty({
     required: false,
-    type: String,
+    type: () => ProjectWhereUniqueInput,
   })
-  @IsString()
+  @ValidateNested()
+  @Type(() => ProjectWhereUniqueInput)
   @IsOptional()
-  @Field(() => String, {
+  @Field(() => ProjectWhereUniqueInput, {
     nullable: true,
   })
-  project?: string | null;
+  project?: ProjectWhereUniqueInput;
 
   @ApiProperty({
     required: false,

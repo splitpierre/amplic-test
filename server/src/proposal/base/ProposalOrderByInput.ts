@@ -52,7 +52,7 @@ class ProposalOrderByInput {
   @Field(() => SortOrder, {
     nullable: true,
   })
-  project?: SortOrder;
+  projectId?: SortOrder;
 
   @ApiProperty({
     required: false,

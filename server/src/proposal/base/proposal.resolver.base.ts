@@ -25,6 +25,7 @@ import { DeleteProposalArgs } from "./DeleteProposalArgs";
 import { ProposalFindManyArgs } from "./ProposalFindManyArgs";
 import { ProposalFindUniqueArgs } from "./ProposalFindUniqueArgs";
 import { Proposal } from "./Proposal";
+import { Project } from "../../project/base/Project";
 import { User } from "../../user/base/User";
 import { ProposalService } from "../proposal.service";
 
@@ -100,6 +101,10 @@ export class ProposalResolverBase {
       data: {
         ...args.data,
 
+        project: {
+          connect: args.data.project,
+        },
+
         user: args.data.user
           ? {
               connect: args.data.user,
@@ -124,6 +129,10 @@ export class ProposalResolverBase {
         ...args,
         data: {
           ...args.data,
+
+          project: {
+            connect: args.data.project,
+          },
 
           user: args.data.user
             ? {
@@ -161,6 +170,22 @@ export class ProposalResolverBase {
       }
       throw error;
     }
+  }
+
+  @common.UseInterceptors(AclFilterResponseInterceptor)
+  @graphql.ResolveField(() => Project, { nullable: true })
+  @nestAccessControl.UseRoles({
+    resource: "Project",
+    action: "read",
+    possession: "any",
+  })
+  async project(@graphql.Parent() parent: Proposal): Promise<Project | null> {
+    const result = await this.service.getProject(parent.id);
+
+    if (!result) {
+      return null;
+    }
+    return result;
   }
 
   @common.UseInterceptors(AclFilterResponseInterceptor)

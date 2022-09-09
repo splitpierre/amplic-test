@@ -4,9 +4,10 @@ import {
   SimpleForm,
   CreateProps,
   TextInput,
-  SelectInput,
   ReferenceInput,
+  SelectInput,
 } from "react-admin";
+import { ProjectTitle } from "../project/ProjectTitle";
 import { UserTitle } from "../user/UserTitle";
 
 export const ProposalCreate = (props: CreateProps): React.ReactElement => {
@@ -18,7 +19,9 @@ export const ProposalCreate = (props: CreateProps): React.ReactElement => {
           multiline
           source="longDescription"
         />
-        <TextInput label="Project" source="project" />
+        <ReferenceInput source="project.id" reference="Project" label="Project">
+          <SelectInput optionText={ProjectTitle} />
+        </ReferenceInput>
         <TextInput
           label="Short Description"
           multiline
