@@ -11,7 +11,7 @@ https://docs.amplication.com/docs/how-to/custom-code
   */
 import { ObjectType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
-import { IsString, IsDate, IsOptional, ValidateNested } from "class-validator";
+import { IsString, IsDate, ValidateNested, IsOptional } from "class-validator";
 import { Type } from "class-transformer";
 import { Project } from "../../project/base/Project";
 import { Proposal } from "../../proposal/base/Proposal";
@@ -32,6 +32,15 @@ class User {
   @Type(() => Date)
   @Field(() => Date)
   createdAt!: Date;
+
+  @ApiProperty({
+    required: false,
+    type: () => [Project],
+  })
+  @ValidateNested()
+  @Type(() => Project)
+  @IsOptional()
+  favoriteProjects?: Array<Project>;
 
   @ApiProperty({
     required: false,

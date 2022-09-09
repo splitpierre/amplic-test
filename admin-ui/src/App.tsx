@@ -17,6 +17,10 @@ import { ProposalList } from "./proposal/ProposalList";
 import { ProposalCreate } from "./proposal/ProposalCreate";
 import { ProposalEdit } from "./proposal/ProposalEdit";
 import { ProposalShow } from "./proposal/ProposalShow";
+import { CategoryList } from "./category/CategoryList";
+import { CategoryCreate } from "./category/CategoryCreate";
+import { CategoryEdit } from "./category/CategoryEdit";
+import { CategoryShow } from "./category/CategoryShow";
 import { jwtAuthProvider } from "./auth-provider/ra-auth-jwt";
 
 const App = (): React.ReactElement => {
@@ -63,6 +67,13 @@ const App = (): React.ReactElement => {
           edit={ProposalEdit}
           create={ProposalCreate}
           show={ProposalShow}
+        />
+        <Resource
+          name="Category"
+          list={CategoryList}
+          edit={CategoryEdit}
+          create={CategoryCreate}
+          show={CategoryShow}
         />
       </Admin>
     </div>

@@ -13,9 +13,9 @@ import { InputType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
 import { StringFilter } from "../../util/StringFilter";
 import { Type } from "class-transformer";
-import { IsOptional, ValidateNested } from "class-validator";
+import { IsOptional, IsEnum, ValidateNested } from "class-validator";
 import { StringNullableFilter } from "../../util/StringNullableFilter";
-import { ProjectWhereUniqueInput } from "../../project/base/ProjectWhereUniqueInput";
+import { EnumProposalStatus } from "./EnumProposalStatus";
 import { UserWhereUniqueInput } from "../../user/base/UserWhereUniqueInput";
 @InputType()
 class ProposalWhereInput {
@@ -43,15 +43,14 @@ class ProposalWhereInput {
 
   @ApiProperty({
     required: false,
-    type: () => ProjectWhereUniqueInput,
+    type: StringNullableFilter,
   })
-  @ValidateNested()
-  @Type(() => ProjectWhereUniqueInput)
+  @Type(() => StringNullableFilter)
   @IsOptional()
-  @Field(() => ProjectWhereUniqueInput, {
+  @Field(() => StringNullableFilter, {
     nullable: true,
   })
-  project?: ProjectWhereUniqueInput;
+  project?: StringNullableFilter;
 
   @ApiProperty({
     required: false,
@@ -63,6 +62,17 @@ class ProposalWhereInput {
     nullable: true,
   })
   shortDescription?: StringNullableFilter;
+
+  @ApiProperty({
+    required: false,
+    enum: EnumProposalStatus,
+  })
+  @IsEnum(EnumProposalStatus)
+  @IsOptional()
+  @Field(() => EnumProposalStatus, {
+    nullable: true,
+  })
+  status?: "Active" | "Pending" | "Closed";
 
   @ApiProperty({
     required: false,

@@ -11,10 +11,10 @@ https://docs.amplication.com/docs/how-to/custom-code
   */
 import { InputType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
-import { IsString, IsOptional, ValidateNested } from "class-validator";
-import { ProjectWhereUniqueInput } from "../../project/base/ProjectWhereUniqueInput";
-import { Type } from "class-transformer";
+import { IsString, IsOptional, IsEnum, ValidateNested } from "class-validator";
+import { EnumProposalStatus } from "./EnumProposalStatus";
 import { UserWhereUniqueInput } from "../../user/base/UserWhereUniqueInput";
+import { Type } from "class-transformer";
 @InputType()
 class ProposalCreateInput {
   @ApiProperty({
@@ -30,15 +30,14 @@ class ProposalCreateInput {
 
   @ApiProperty({
     required: false,
-    type: () => ProjectWhereUniqueInput,
+    type: String,
   })
-  @ValidateNested()
-  @Type(() => ProjectWhereUniqueInput)
+  @IsString()
   @IsOptional()
-  @Field(() => ProjectWhereUniqueInput, {
+  @Field(() => String, {
     nullable: true,
   })
-  project?: ProjectWhereUniqueInput | null;
+  project?: string | null;
 
   @ApiProperty({
     required: false,
@@ -50,6 +49,17 @@ class ProposalCreateInput {
     nullable: true,
   })
   shortDescription?: string | null;
+
+  @ApiProperty({
+    required: false,
+    enum: EnumProposalStatus,
+  })
+  @IsEnum(EnumProposalStatus)
+  @IsOptional()
+  @Field(() => EnumProposalStatus, {
+    nullable: true,
+  })
+  status?: "Active" | "Pending" | "Closed" | null;
 
   @ApiProperty({
     required: false,

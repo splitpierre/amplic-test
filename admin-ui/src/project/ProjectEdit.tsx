@@ -4,20 +4,35 @@ import {
   Edit,
   SimpleForm,
   EditProps,
-  TextInput,
   ReferenceArrayInput,
   SelectArrayInput,
   ReferenceInput,
   SelectInput,
+  TextInput,
 } from "react-admin";
 
-import { ProposalTitle } from "../proposal/ProposalTitle";
+import { CategoryTitle } from "../category/CategoryTitle";
 import { UserTitle } from "../user/UserTitle";
 
 export const ProjectEdit = (props: EditProps): React.ReactElement => {
   return (
     <Edit {...props}>
       <SimpleForm>
+        <ReferenceArrayInput
+          source="categories"
+          reference="Category"
+          parse={(value: any) => value && value.map((v: any) => ({ id: v }))}
+          format={(value: any) => value && value.map((v: any) => v.id)}
+        >
+          <SelectArrayInput optionText={CategoryTitle} />
+        </ReferenceArrayInput>
+        <ReferenceInput
+          source="user.id"
+          reference="User"
+          label="Favorite Projects"
+        >
+          <SelectInput optionText={UserTitle} />
+        </ReferenceInput>
         <TextInput
           label="Project Description"
           multiline
@@ -25,14 +40,6 @@ export const ProjectEdit = (props: EditProps): React.ReactElement => {
         />
         <TextInput label="Project Icon" source="projectIcon" />
         <TextInput label="Project Name" source="projectName" />
-        <ReferenceArrayInput
-          source="proposals"
-          reference="Proposal"
-          parse={(value: any) => value && value.map((v: any) => ({ id: v }))}
-          format={(value: any) => value && value.map((v: any) => v.id)}
-        >
-          <SelectArrayInput optionText={ProposalTitle} />
-        </ReferenceArrayInput>
         <ReferenceInput source="user.id" reference="User" label="User">
           <SelectInput optionText={UserTitle} />
         </ReferenceInput>

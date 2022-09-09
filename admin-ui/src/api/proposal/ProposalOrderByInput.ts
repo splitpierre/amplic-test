@@ -4,8 +4,9 @@ export type ProposalOrderByInput = {
   createdAt?: SortOrder;
   id?: SortOrder;
   longDescription?: SortOrder;
-  projectId?: SortOrder;
+  project?: SortOrder;
   shortDescription?: SortOrder;
+  status?: SortOrder;
   title?: SortOrder;
   updatedAt?: SortOrder;
   userId?: SortOrder;

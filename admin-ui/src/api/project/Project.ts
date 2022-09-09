@@ -1,13 +1,14 @@
-import { Proposal } from "../proposal/Proposal";
+import { Category } from "../category/Category";
 import { User } from "../user/User";
 
 export type Project = {
+  categories?: Array<Category>;
   createdAt: Date;
+  favoriteProjects?: User | null;
   id: string;
   projectDescription: string | null;
   projectIcon: string;
   projectName: string;
-  proposals?: Array<Proposal>;
   updatedAt: Date;
   user?: User | null;
 };

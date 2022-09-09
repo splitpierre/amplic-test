@@ -7,7 +7,6 @@ import {
   TextField,
   ReferenceField,
 } from "react-admin";
-import { PROJECT_TITLE_FIELD } from "../project/ProjectTitle";
 import { USER_TITLE_FIELD } from "../user/UserTitle";
 
 export const ProposalShow = (props: ShowProps): React.ReactElement => {
@@ -17,10 +16,9 @@ export const ProposalShow = (props: ShowProps): React.ReactElement => {
         <DateField source="createdAt" label="Created At" />
         <TextField label="ID" source="id" />
         <TextField label="Long Description" source="longDescription" />
-        <ReferenceField label="Project" source="project.id" reference="Project">
-          <TextField source={PROJECT_TITLE_FIELD} />
-        </ReferenceField>
+        <TextField label="Project" source="project" />
         <TextField label="Short Description" source="shortDescription" />
+        <TextField label="Status" source="status" />
         <TextField label="Title" source="title" />
         <DateField source="updatedAt" label="Updated At" />
         <ReferenceField label="User" source="user.id" reference="User">

@@ -14,8 +14,8 @@ import { ApiProperty } from "@nestjs/swagger";
 import { StringFilter } from "../../util/StringFilter";
 import { Type } from "class-transformer";
 import { IsOptional, ValidateNested } from "class-validator";
-import { StringNullableFilter } from "../../util/StringNullableFilter";
 import { ProjectListRelationFilter } from "../../project/base/ProjectListRelationFilter";
+import { StringNullableFilter } from "../../util/StringNullableFilter";
 import { ProposalListRelationFilter } from "../../proposal/base/ProposalListRelationFilter";
 @InputType()
 class UserWhereInput {
@@ -29,6 +29,18 @@ class UserWhereInput {
     nullable: true,
   })
   address?: StringFilter;
+
+  @ApiProperty({
+    required: false,
+    type: () => ProjectListRelationFilter,
+  })
+  @ValidateNested()
+  @Type(() => ProjectListRelationFilter)
+  @IsOptional()
+  @Field(() => ProjectListRelationFilter, {
+    nullable: true,
+  })
+  favoriteProjects?: ProjectListRelationFilter;
 
   @ApiProperty({
     required: false,

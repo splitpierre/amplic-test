@@ -3,6 +3,7 @@ import { ProposalUpdateManyWithoutUsersInput } from "./ProposalUpdateManyWithout
 
 export type UserUpdateInput = {
   address?: string;
+  favoriteProjects?: ProjectUpdateManyWithoutUsersInput;
   firstName?: string | null;
   lastName?: string | null;
   password?: string;

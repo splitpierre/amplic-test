@@ -1,13 +1,14 @@
+import { CategoryListRelationFilter } from "../category/CategoryListRelationFilter";
+import { UserWhereUniqueInput } from "../user/UserWhereUniqueInput";
 import { StringFilter } from "../../util/StringFilter";
 import { StringNullableFilter } from "../../util/StringNullableFilter";
-import { ProposalListRelationFilter } from "../proposal/ProposalListRelationFilter";
-import { UserWhereUniqueInput } from "../user/UserWhereUniqueInput";
 
 export type ProjectWhereInput = {
+  categories?: CategoryListRelationFilter;
+  favoriteProjects?: UserWhereUniqueInput;
   id?: StringFilter;
   projectDescription?: StringNullableFilter;
   projectIcon?: StringFilter;
   projectName?: StringFilter;
-  proposals?: ProposalListRelationFilter;
   user?: UserWhereUniqueInput;
 };

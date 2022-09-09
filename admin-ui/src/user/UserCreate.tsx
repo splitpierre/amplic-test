@@ -5,9 +5,9 @@ import {
   SimpleForm,
   CreateProps,
   TextInput,
-  PasswordInput,
   ReferenceArrayInput,
   SelectArrayInput,
+  PasswordInput,
 } from "react-admin";
 
 import { ProjectTitle } from "../project/ProjectTitle";
@@ -19,6 +19,14 @@ export const UserCreate = (props: CreateProps): React.ReactElement => {
     <Create {...props}>
       <SimpleForm>
         <TextInput label="Address" source="address" />
+        <ReferenceArrayInput
+          source="favoriteProjects"
+          reference="Project"
+          parse={(value: any) => value && value.map((v: any) => ({ id: v }))}
+          format={(value: any) => value && value.map((v: any) => v.id)}
+        >
+          <SelectArrayInput optionText={ProjectTitle} />
+        </ReferenceArrayInput>
         <TextInput label="First Name" source="firstName" />
         <TextInput label="Last Name" source="lastName" />
         <PasswordInput label="Password" source="password" />
