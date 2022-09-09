@@ -26,60 +26,6 @@ export const UserShow = (props: ShowProps): React.ReactElement => {
         <DateField source="updatedAt" label="Updated At" />
         <TextField label="Username" source="username" />
         <ReferenceManyField
-          reference="Project"
-          target="UserId"
-          label="Projects"
-        >
-          <Datagrid rowClick="show">
-            <DateField source="createdAt" label="Created At" />
-            <ReferenceField
-              label="Favorite Projects"
-              source="user.id"
-              reference="User"
-            >
-              <TextField source={USER_TITLE_FIELD} />
-            </ReferenceField>
-            <TextField label="ID" source="id" />
-            <TextField
-              label="Project Description"
-              source="projectDescription"
-            />
-            <TextField label="Project Icon" source="projectIcon" />
-            <TextField label="Project Name" source="projectName" />
-            <DateField source="updatedAt" label="Updated At" />
-            <ReferenceField label="User" source="user.id" reference="User">
-              <TextField source={USER_TITLE_FIELD} />
-            </ReferenceField>
-          </Datagrid>
-        </ReferenceManyField>
-        <ReferenceManyField
-          reference="Project"
-          target="UserId"
-          label="Projects"
-        >
-          <Datagrid rowClick="show">
-            <DateField source="createdAt" label="Created At" />
-            <ReferenceField
-              label="Favorite Projects"
-              source="user.id"
-              reference="User"
-            >
-              <TextField source={USER_TITLE_FIELD} />
-            </ReferenceField>
-            <TextField label="ID" source="id" />
-            <TextField
-              label="Project Description"
-              source="projectDescription"
-            />
-            <TextField label="Project Icon" source="projectIcon" />
-            <TextField label="Project Name" source="projectName" />
-            <DateField source="updatedAt" label="Updated At" />
-            <ReferenceField label="User" source="user.id" reference="User">
-              <TextField source={USER_TITLE_FIELD} />
-            </ReferenceField>
-          </Datagrid>
-        </ReferenceManyField>
-        <ReferenceManyField
           reference="Proposal"
           target="UserId"
           label="Proposals"

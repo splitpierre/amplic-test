@@ -27,7 +27,6 @@ import { ProjectFindUniqueArgs } from "./ProjectFindUniqueArgs";
 import { Project } from "./Project";
 import { CategoryFindManyArgs } from "../../category/base/CategoryFindManyArgs";
 import { Category } from "../../category/base/Category";
-import { User } from "../../user/base/User";
 import { ProjectService } from "../project.service";
 
 @graphql.Resolver(() => Project)
@@ -99,21 +98,7 @@ export class ProjectResolverBase {
   ): Promise<Project> {
     return await this.service.create({
       ...args,
-      data: {
-        ...args.data,
-
-        favoriteProjects: args.data.favoriteProjects
-          ? {
-              connect: args.data.favoriteProjects,
-            }
-          : undefined,
-
-        user: args.data.user
-          ? {
-              connect: args.data.user,
-            }
-          : undefined,
-      },
+      data: args.data,
     });
   }
 
@@ -130,21 +115,7 @@ export class ProjectResolverBase {
     try {
       return await this.service.update({
         ...args,
-        data: {
-          ...args.data,
-
-          favoriteProjects: args.data.favoriteProjects
-            ? {
-                connect: args.data.favoriteProjects,
-              }
-            : undefined,
-
-          user: args.data.user
-            ? {
-                connect: args.data.user,
-              }
-            : undefined,
-        },
+        data: args.data,
       });
     } catch (error) {
       if (isRecordNotFoundError(error)) {
@@ -195,39 +166,5 @@ export class ProjectResolverBase {
     }
 
     return results;
-  }
-
-  @common.UseInterceptors(AclFilterResponseInterceptor)
-  @graphql.ResolveField(() => User, { nullable: true })
-  @nestAccessControl.UseRoles({
-    resource: "User",
-    action: "read",
-    possession: "any",
-  })
-  async favoriteProjects(
-    @graphql.Parent() parent: Project
-  ): Promise<User | null> {
-    const result = await this.service.getFavoriteProjects(parent.id);
-
-    if (!result) {
-      return null;
-    }
-    return result;
-  }
-
-  @common.UseInterceptors(AclFilterResponseInterceptor)
-  @graphql.ResolveField(() => User, { nullable: true })
-  @nestAccessControl.UseRoles({
-    resource: "User",
-    action: "read",
-    possession: "any",
-  })
-  async user(@graphql.Parent() parent: Project): Promise<User | null> {
-    const result = await this.service.getUser(parent.id);
-
-    if (!result) {
-      return null;
-    }
-    return result;
   }
 }

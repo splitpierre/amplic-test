@@ -14,11 +14,10 @@ import { ApiProperty } from "@nestjs/swagger";
 import { CategoryCreateNestedManyWithoutProjectsInput } from "./CategoryCreateNestedManyWithoutProjectsInput";
 import { ValidateNested, IsOptional, IsString } from "class-validator";
 import { Type } from "class-transformer";
-import { UserWhereUniqueInput } from "../../user/base/UserWhereUniqueInput";
 @InputType()
 class ProjectCreateInput {
   @ApiProperty({
-    required: false,
+    required: true,
     type: () => CategoryCreateNestedManyWithoutProjectsInput,
   })
   @ValidateNested()
@@ -28,18 +27,6 @@ class ProjectCreateInput {
     nullable: true,
   })
   categories?: CategoryCreateNestedManyWithoutProjectsInput;
-
-  @ApiProperty({
-    required: false,
-    type: () => UserWhereUniqueInput,
-  })
-  @ValidateNested()
-  @Type(() => UserWhereUniqueInput)
-  @IsOptional()
-  @Field(() => UserWhereUniqueInput, {
-    nullable: true,
-  })
-  favoriteProjects?: UserWhereUniqueInput | null;
 
   @ApiProperty({
     required: false,
@@ -67,17 +54,5 @@ class ProjectCreateInput {
   @IsString()
   @Field(() => String)
   projectName!: string;
-
-  @ApiProperty({
-    required: false,
-    type: () => UserWhereUniqueInput,
-  })
-  @ValidateNested()
-  @Type(() => UserWhereUniqueInput)
-  @IsOptional()
-  @Field(() => UserWhereUniqueInput, {
-    nullable: true,
-  })
-  user?: UserWhereUniqueInput | null;
 }
 export { ProjectCreateInput };

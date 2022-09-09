@@ -14,11 +14,10 @@ import { ApiProperty } from "@nestjs/swagger";
 import { Category } from "../../category/base/Category";
 import { ValidateNested, IsOptional, IsDate, IsString } from "class-validator";
 import { Type } from "class-transformer";
-import { User } from "../../user/base/User";
 @ObjectType()
 class Project {
   @ApiProperty({
-    required: false,
+    required: true,
     type: () => [Category],
   })
   @ValidateNested()
@@ -33,15 +32,6 @@ class Project {
   @Type(() => Date)
   @Field(() => Date)
   createdAt!: Date;
-
-  @ApiProperty({
-    required: false,
-    type: () => User,
-  })
-  @ValidateNested()
-  @Type(() => User)
-  @IsOptional()
-  favoriteProjects?: User | null;
 
   @ApiProperty({
     required: true,
@@ -85,14 +75,5 @@ class Project {
   @Type(() => Date)
   @Field(() => Date)
   updatedAt!: Date;
-
-  @ApiProperty({
-    required: false,
-    type: () => User,
-  })
-  @ValidateNested()
-  @Type(() => User)
-  @IsOptional()
-  user?: User | null;
 }
 export { Project };

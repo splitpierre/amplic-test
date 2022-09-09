@@ -6,13 +6,10 @@ import {
   EditProps,
   ReferenceArrayInput,
   SelectArrayInput,
-  ReferenceInput,
-  SelectInput,
   TextInput,
 } from "react-admin";
 
 import { CategoryTitle } from "../category/CategoryTitle";
-import { UserTitle } from "../user/UserTitle";
 
 export const ProjectEdit = (props: EditProps): React.ReactElement => {
   return (
@@ -26,13 +23,6 @@ export const ProjectEdit = (props: EditProps): React.ReactElement => {
         >
           <SelectArrayInput optionText={CategoryTitle} />
         </ReferenceArrayInput>
-        <ReferenceInput
-          source="user.id"
-          reference="User"
-          label="Favorite Projects"
-        >
-          <SelectInput optionText={UserTitle} />
-        </ReferenceInput>
         <TextInput
           label="Project Description"
           multiline
@@ -40,9 +30,6 @@ export const ProjectEdit = (props: EditProps): React.ReactElement => {
         />
         <TextInput label="Project Icon" source="projectIcon" />
         <TextInput label="Project Name" source="projectName" />
-        <ReferenceInput source="user.id" reference="User" label="User">
-          <SelectInput optionText={UserTitle} />
-        </ReferenceInput>
       </SimpleForm>
     </Edit>
   );
