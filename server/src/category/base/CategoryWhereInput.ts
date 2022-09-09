@@ -14,7 +14,7 @@ import { ApiProperty } from "@nestjs/swagger";
 import { StringFilter } from "../../util/StringFilter";
 import { Type } from "class-transformer";
 import { IsOptional, ValidateNested } from "class-validator";
-import { ProjectWhereUniqueInput } from "../../project/base/ProjectWhereUniqueInput";
+import { ProjectListRelationFilter } from "../../project/base/ProjectListRelationFilter";
 import { StringNullableFilter } from "../../util/StringNullableFilter";
 @InputType()
 class CategoryWhereInput {
@@ -31,15 +31,15 @@ class CategoryWhereInput {
 
   @ApiProperty({
     required: false,
-    type: () => ProjectWhereUniqueInput,
+    type: () => ProjectListRelationFilter,
   })
   @ValidateNested()
-  @Type(() => ProjectWhereUniqueInput)
+  @Type(() => ProjectListRelationFilter)
   @IsOptional()
-  @Field(() => ProjectWhereUniqueInput, {
+  @Field(() => ProjectListRelationFilter, {
     nullable: true,
   })
-  project?: ProjectWhereUniqueInput;
+  project?: ProjectListRelationFilter;
 
   @ApiProperty({
     required: false,

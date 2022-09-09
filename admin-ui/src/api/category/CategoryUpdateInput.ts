@@ -1,7 +1,7 @@
-import { ProjectWhereUniqueInput } from "../project/ProjectWhereUniqueInput";
+import { ProjectUpdateManyWithoutCategoriesInput } from "./ProjectUpdateManyWithoutCategoriesInput";
 
 export type CategoryUpdateInput = {
-  project?: ProjectWhereUniqueInput | null;
+  project?: ProjectUpdateManyWithoutCategoriesInput;
   slug?: string | null;
   title?: string;
 };

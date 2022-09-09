@@ -47,11 +47,14 @@ export class CategoryServiceBase {
     return this.prisma.category.delete(args);
   }
 
-  async getProject(parentId: string): Promise<Project | null> {
+  async findProject(
+    parentId: string,
+    args: Prisma.ProjectFindManyArgs
+  ): Promise<Project[]> {
     return this.prisma.category
       .findUnique({
         where: { id: parentId },
       })
-      .project();
+      .project(args);
   }
 }

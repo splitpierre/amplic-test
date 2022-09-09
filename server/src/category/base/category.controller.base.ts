@@ -27,6 +27,9 @@ import { CategoryWhereUniqueInput } from "./CategoryWhereUniqueInput";
 import { CategoryFindManyArgs } from "./CategoryFindManyArgs";
 import { CategoryUpdateInput } from "./CategoryUpdateInput";
 import { Category } from "./Category";
+import { ProjectFindManyArgs } from "../../project/base/ProjectFindManyArgs";
+import { Project } from "../../project/base/Project";
+import { ProjectWhereUniqueInput } from "../../project/base/ProjectWhereUniqueInput";
 @swagger.ApiBearerAuth()
 @common.UseGuards(defaultAuthGuard.DefaultAuthGuard, nestAccessControl.ACGuard)
 export class CategoryControllerBase {
@@ -46,25 +49,10 @@ export class CategoryControllerBase {
   @swagger.ApiForbiddenResponse({ type: errors.ForbiddenException })
   async create(@common.Body() data: CategoryCreateInput): Promise<Category> {
     return await this.service.create({
-      data: {
-        ...data,
-
-        project: data.project
-          ? {
-              connect: data.project,
-            }
-          : undefined,
-      },
+      data: data,
       select: {
         createdAt: true,
         id: true,
-
-        project: {
-          select: {
-            id: true,
-          },
-        },
-
         slug: true,
         title: true,
         updatedAt: true,
@@ -89,13 +77,6 @@ export class CategoryControllerBase {
       select: {
         createdAt: true,
         id: true,
-
-        project: {
-          select: {
-            id: true,
-          },
-        },
-
         slug: true,
         title: true,
         updatedAt: true,
@@ -121,13 +102,6 @@ export class CategoryControllerBase {
       select: {
         createdAt: true,
         id: true,
-
-        project: {
-          select: {
-            id: true,
-          },
-        },
-
         slug: true,
         title: true,
         updatedAt: true,
@@ -158,25 +132,10 @@ export class CategoryControllerBase {
     try {
       return await this.service.update({
         where: params,
-        data: {
-          ...data,
-
-          project: data.project
-            ? {
-                connect: data.project,
-              }
-            : undefined,
-        },
+        data: data,
         select: {
           createdAt: true,
           id: true,
-
-          project: {
-            select: {
-              id: true,
-            },
-          },
-
           slug: true,
           title: true,
           updatedAt: true,
@@ -210,13 +169,6 @@ export class CategoryControllerBase {
         select: {
           createdAt: true,
           id: true,
-
-          project: {
-            select: {
-              id: true,
-            },
-          },
-
           slug: true,
           title: true,
           updatedAt: true,
@@ -230,5 +182,103 @@ export class CategoryControllerBase {
       }
       throw error;
     }
+  }
+
+  @common.UseInterceptors(AclFilterResponseInterceptor)
+  @nestAccessControl.UseRoles({
+    resource: "Project",
+    action: "read",
+    possession: "any",
+  })
+  @common.Get("/:id/project")
+  @ApiNestedQuery(ProjectFindManyArgs)
+  async findManyProject(
+    @common.Req() request: Request,
+    @common.Param() params: CategoryWhereUniqueInput
+  ): Promise<Project[]> {
+    const query = plainToClass(ProjectFindManyArgs, request.query);
+    const results = await this.service.findProject(params.id, {
+      ...query,
+      select: {
+        createdAt: true,
+        id: true,
+        projectDescription: true,
+        projectIcon: true,
+        projectName: true,
+        updatedAt: true,
+      },
+    });
+    if (results === null) {
+      throw new errors.NotFoundException(
+        `No resource was found for ${JSON.stringify(params)}`
+      );
+    }
+    return results;
+  }
+
+  @nestAccessControl.UseRoles({
+    resource: "Category",
+    action: "update",
+    possession: "any",
+  })
+  @common.Post("/:id/project")
+  async connectProject(
+    @common.Param() params: CategoryWhereUniqueInput,
+    @common.Body() body: ProjectWhereUniqueInput[]
+  ): Promise<void> {
+    const data = {
+      project: {
+        connect: body,
+      },
+    };
+    await this.service.update({
+      where: params,
+      data,
+      select: { id: true },
+    });
+  }
+
+  @nestAccessControl.UseRoles({
+    resource: "Category",
+    action: "update",
+    possession: "any",
+  })
+  @common.Patch("/:id/project")
+  async updateProject(
+    @common.Param() params: CategoryWhereUniqueInput,
+    @common.Body() body: ProjectWhereUniqueInput[]
+  ): Promise<void> {
+    const data = {
+      project: {
+        set: body,
+      },
+    };
+    await this.service.update({
+      where: params,
+      data,
+      select: { id: true },
+    });
+  }
+
+  @nestAccessControl.UseRoles({
+    resource: "Category",
+    action: "update",
+    possession: "any",
+  })
+  @common.Delete("/:id/project")
+  async disconnectProject(
+    @common.Param() params: CategoryWhereUniqueInput,
+    @common.Body() body: ProjectWhereUniqueInput[]
+  ): Promise<void> {
+    const data = {
+      project: {
+        disconnect: body,
+      },
+    };
+    await this.service.update({
+      where: params,
+      data,
+      select: { id: true },
+    });
   }
 }
