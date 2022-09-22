@@ -17,7 +17,7 @@ import { GqlDefaultAuthGuard } from "../../auth/gqlDefaultAuth.guard";
 import * as gqlACGuard from "../../auth/gqlAC.guard";
 import { isRecordNotFoundError } from "../../prisma.util";
 import { MetaQueryPayload } from "../../util/MetaQueryPayload";
-import { AclFilterResponseInterceptor } from "../../interceptors/aclFilterResponse.interceptor";
+import { Public } from "../../decorators/public.decorator";
 import { AclValidateRequestInterceptor } from "../../interceptors/aclValidateRequest.interceptor";
 import { CreateProposalArgs } from "./CreateProposalArgs";
 import { UpdateProposalArgs } from "./UpdateProposalArgs";
@@ -37,12 +37,8 @@ export class ProposalResolverBase {
     protected readonly rolesBuilder: nestAccessControl.RolesBuilder
   ) {}
 
+  @Public()
   @graphql.Query(() => MetaQueryPayload)
-  @nestAccessControl.UseRoles({
-    resource: "Proposal",
-    action: "read",
-    possession: "any",
-  })
   async _proposalsMeta(
     @graphql.Args() args: ProposalFindManyArgs
   ): Promise<MetaQueryPayload> {
@@ -56,26 +52,16 @@ export class ProposalResolverBase {
     };
   }
 
-  @common.UseInterceptors(AclFilterResponseInterceptor)
+  @Public()
   @graphql.Query(() => [Proposal])
-  @nestAccessControl.UseRoles({
-    resource: "Proposal",
-    action: "read",
-    possession: "any",
-  })
   async proposals(
     @graphql.Args() args: ProposalFindManyArgs
   ): Promise<Proposal[]> {
     return this.service.findMany(args);
   }
 
-  @common.UseInterceptors(AclFilterResponseInterceptor)
+  @Public()
   @graphql.Query(() => Proposal, { nullable: true })
-  @nestAccessControl.UseRoles({
-    resource: "Proposal",
-    action: "read",
-    possession: "own",
-  })
   async proposal(
     @graphql.Args() args: ProposalFindUniqueArgs
   ): Promise<Proposal | null> {
@@ -172,13 +158,8 @@ export class ProposalResolverBase {
     }
   }
 
-  @common.UseInterceptors(AclFilterResponseInterceptor)
+  @Public()
   @graphql.ResolveField(() => Project, { nullable: true })
-  @nestAccessControl.UseRoles({
-    resource: "Project",
-    action: "read",
-    possession: "any",
-  })
   async project(@graphql.Parent() parent: Proposal): Promise<Project | null> {
     const result = await this.service.getProject(parent.id);
 
@@ -188,13 +169,8 @@ export class ProposalResolverBase {
     return result;
   }
 
-  @common.UseInterceptors(AclFilterResponseInterceptor)
+  @Public()
   @graphql.ResolveField(() => User, { nullable: true })
-  @nestAccessControl.UseRoles({
-    resource: "User",
-    action: "read",
-    possession: "any",
-  })
   async user(@graphql.Parent() parent: Proposal): Promise<User | null> {
     const result = await this.service.getUser(parent.id);
 
