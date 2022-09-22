@@ -17,7 +17,7 @@ import { GqlDefaultAuthGuard } from "../../auth/gqlDefaultAuth.guard";
 import * as gqlACGuard from "../../auth/gqlAC.guard";
 import { isRecordNotFoundError } from "../../prisma.util";
 import { MetaQueryPayload } from "../../util/MetaQueryPayload";
-import { AclFilterResponseInterceptor } from "../../interceptors/aclFilterResponse.interceptor";
+import { Public } from "../../decorators/public.decorator";
 import { AclValidateRequestInterceptor } from "../../interceptors/aclValidateRequest.interceptor";
 import { CreateProjectArgs } from "./CreateProjectArgs";
 import { UpdateProjectArgs } from "./UpdateProjectArgs";
@@ -39,12 +39,8 @@ export class ProjectResolverBase {
     protected readonly rolesBuilder: nestAccessControl.RolesBuilder
   ) {}
 
+  @Public()
   @graphql.Query(() => MetaQueryPayload)
-  @nestAccessControl.UseRoles({
-    resource: "Project",
-    action: "read",
-    possession: "any",
-  })
   async _projectsMeta(
     @graphql.Args() args: ProjectFindManyArgs
   ): Promise<MetaQueryPayload> {
@@ -58,26 +54,16 @@ export class ProjectResolverBase {
     };
   }
 
-  @common.UseInterceptors(AclFilterResponseInterceptor)
+  @Public()
   @graphql.Query(() => [Project])
-  @nestAccessControl.UseRoles({
-    resource: "Project",
-    action: "read",
-    possession: "any",
-  })
   async projects(
     @graphql.Args() args: ProjectFindManyArgs
   ): Promise<Project[]> {
     return this.service.findMany(args);
   }
 
-  @common.UseInterceptors(AclFilterResponseInterceptor)
+  @Public()
   @graphql.Query(() => Project, { nullable: true })
-  @nestAccessControl.UseRoles({
-    resource: "Project",
-    action: "read",
-    possession: "own",
-  })
   async project(
     @graphql.Args() args: ProjectFindUniqueArgs
   ): Promise<Project | null> {
@@ -150,13 +136,8 @@ export class ProjectResolverBase {
     }
   }
 
-  @common.UseInterceptors(AclFilterResponseInterceptor)
+  @Public()
   @graphql.ResolveField(() => [Category])
-  @nestAccessControl.UseRoles({
-    resource: "Category",
-    action: "read",
-    possession: "any",
-  })
   async categories(
     @graphql.Parent() parent: Project,
     @graphql.Args() args: CategoryFindManyArgs
@@ -170,13 +151,8 @@ export class ProjectResolverBase {
     return results;
   }
 
-  @common.UseInterceptors(AclFilterResponseInterceptor)
+  @Public()
   @graphql.ResolveField(() => [Proposal])
-  @nestAccessControl.UseRoles({
-    resource: "Proposal",
-    action: "read",
-    possession: "any",
-  })
   async proposals(
     @graphql.Parent() parent: Project,
     @graphql.Args() args: ProposalFindManyArgs

@@ -17,7 +17,7 @@ import { GqlDefaultAuthGuard } from "../../auth/gqlDefaultAuth.guard";
 import * as gqlACGuard from "../../auth/gqlAC.guard";
 import { isRecordNotFoundError } from "../../prisma.util";
 import { MetaQueryPayload } from "../../util/MetaQueryPayload";
-import { AclFilterResponseInterceptor } from "../../interceptors/aclFilterResponse.interceptor";
+import { Public } from "../../decorators/public.decorator";
 import { AclValidateRequestInterceptor } from "../../interceptors/aclValidateRequest.interceptor";
 import { CreateCategoryArgs } from "./CreateCategoryArgs";
 import { UpdateCategoryArgs } from "./UpdateCategoryArgs";
@@ -37,12 +37,8 @@ export class CategoryResolverBase {
     protected readonly rolesBuilder: nestAccessControl.RolesBuilder
   ) {}
 
+  @Public()
   @graphql.Query(() => MetaQueryPayload)
-  @nestAccessControl.UseRoles({
-    resource: "Category",
-    action: "read",
-    possession: "any",
-  })
   async _categoriesMeta(
     @graphql.Args() args: CategoryFindManyArgs
   ): Promise<MetaQueryPayload> {
@@ -56,26 +52,16 @@ export class CategoryResolverBase {
     };
   }
 
-  @common.UseInterceptors(AclFilterResponseInterceptor)
+  @Public()
   @graphql.Query(() => [Category])
-  @nestAccessControl.UseRoles({
-    resource: "Category",
-    action: "read",
-    possession: "any",
-  })
   async categories(
     @graphql.Args() args: CategoryFindManyArgs
   ): Promise<Category[]> {
     return this.service.findMany(args);
   }
 
-  @common.UseInterceptors(AclFilterResponseInterceptor)
+  @Public()
   @graphql.Query(() => Category, { nullable: true })
-  @nestAccessControl.UseRoles({
-    resource: "Category",
-    action: "read",
-    possession: "own",
-  })
   async category(
     @graphql.Args() args: CategoryFindUniqueArgs
   ): Promise<Category | null> {
@@ -148,13 +134,8 @@ export class CategoryResolverBase {
     }
   }
 
-  @common.UseInterceptors(AclFilterResponseInterceptor)
+  @Public()
   @graphql.ResolveField(() => [Project])
-  @nestAccessControl.UseRoles({
-    resource: "Project",
-    action: "read",
-    possession: "any",
-  })
   async project(
     @graphql.Parent() parent: Category,
     @graphql.Args() args: ProjectFindManyArgs
