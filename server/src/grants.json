@@ -6,6 +6,12 @@
     "attributes": "*"
   },
   {
+    "role": "developer",
+    "resource": "User",
+    "action": "create:any",
+    "attributes": "*"
+  },
+  {
     "role": "voter",
     "resource": "User",
     "action": "create:any",
@@ -30,6 +36,12 @@
     "attributes": "*"
   },
   {
+    "role": "developer",
+    "resource": "User",
+    "action": "update:any",
+    "attributes": "*"
+  },
+  {
     "role": "voter",
     "resource": "User",
     "action": "update:any",
@@ -49,6 +61,12 @@
   },
   {
     "role": "user",
+    "resource": "User",
+    "action": "delete:any",
+    "attributes": "*"
+  },
+  {
+    "role": "developer",
     "resource": "User",
     "action": "delete:any",
     "attributes": "*"
@@ -126,6 +144,12 @@
     "attributes": "*"
   },
   {
+    "role": "developer",
+    "resource": "Category",
+    "action": "create:any",
+    "attributes": "*"
+  },
+  {
     "role": "voter",
     "resource": "Category",
     "action": "create:any",
@@ -150,6 +174,12 @@
     "attributes": "*"
   },
   {
+    "role": "developer",
+    "resource": "Category",
+    "action": "update:any",
+    "attributes": "*"
+  },
+  {
     "role": "voter",
     "resource": "Category",
     "action": "update:any",
@@ -169,6 +199,12 @@
   },
   {
     "role": "user",
+    "resource": "Category",
+    "action": "delete:any",
+    "attributes": "*"
+  },
+  {
+    "role": "developer",
     "resource": "Category",
     "action": "delete:any",
     "attributes": "*"
