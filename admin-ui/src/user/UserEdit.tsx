@@ -18,6 +18,7 @@ export const UserEdit = (props: EditProps): React.ReactElement => {
     <Edit {...props}>
       <SimpleForm>
         <TextInput label="Address" source="address" />
+        <TextInput label="API Key" source="apiKey" />
         <TextInput label="First Name" source="firstName" />
         <TextInput label="Last Name" source="lastName" />
         <PasswordInput label="Password" source="password" />
@@ -30,7 +31,7 @@ export const UserEdit = (props: EditProps): React.ReactElement => {
           <SelectArrayInput optionText={ProposalTitle} />
         </ReferenceArrayInput>
         <SelectArrayInput
-          source="roles"
+          source="roles.roles"
           choices={ROLES_OPTIONS}
           optionText="label"
           optionValue="value"
