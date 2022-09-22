@@ -20,7 +20,7 @@ import { plainToClass } from "class-transformer";
 import { ApiNestedQuery } from "../../decorators/api-nested-query.decorator";
 import { UserService } from "../user.service";
 import { AclValidateRequestInterceptor } from "../../interceptors/aclValidateRequest.interceptor";
-import { AclFilterResponseInterceptor } from "../../interceptors/aclFilterResponse.interceptor";
+import { Public } from "../../decorators/public.decorator";
 import { UserCreateInput } from "./UserCreateInput";
 import { UserWhereInput } from "./UserWhereInput";
 import { UserWhereUniqueInput } from "./UserWhereUniqueInput";
@@ -52,6 +52,7 @@ export class UserControllerBase {
       data: data,
       select: {
         address: true,
+        apiKey: true,
         createdAt: true,
         firstName: true,
         id: true,
@@ -63,12 +64,7 @@ export class UserControllerBase {
     });
   }
 
-  @common.UseInterceptors(AclFilterResponseInterceptor)
-  @nestAccessControl.UseRoles({
-    resource: "User",
-    action: "read",
-    possession: "any",
-  })
+  @Public()
   @common.Get()
   @swagger.ApiOkResponse({ type: [User] })
   @swagger.ApiForbiddenResponse()
@@ -79,6 +75,7 @@ export class UserControllerBase {
       ...args,
       select: {
         address: true,
+        apiKey: true,
         createdAt: true,
         firstName: true,
         id: true,
@@ -90,12 +87,7 @@ export class UserControllerBase {
     });
   }
 
-  @common.UseInterceptors(AclFilterResponseInterceptor)
-  @nestAccessControl.UseRoles({
-    resource: "User",
-    action: "read",
-    possession: "own",
-  })
+  @Public()
   @common.Get("/:id")
   @swagger.ApiOkResponse({ type: User })
   @swagger.ApiNotFoundResponse({ type: errors.NotFoundException })
@@ -107,6 +99,7 @@ export class UserControllerBase {
       where: params,
       select: {
         address: true,
+        apiKey: true,
         createdAt: true,
         firstName: true,
         id: true,
@@ -144,6 +137,7 @@ export class UserControllerBase {
         data: data,
         select: {
           address: true,
+          apiKey: true,
           createdAt: true,
           firstName: true,
           id: true,
@@ -180,6 +174,7 @@ export class UserControllerBase {
         where: params,
         select: {
           address: true,
+          apiKey: true,
           createdAt: true,
           firstName: true,
           id: true,
@@ -199,12 +194,7 @@ export class UserControllerBase {
     }
   }
 
-  @common.UseInterceptors(AclFilterResponseInterceptor)
-  @nestAccessControl.UseRoles({
-    resource: "Proposal",
-    action: "read",
-    possession: "any",
-  })
+  @Public()
   @common.Get("/:id/proposals")
   @ApiNestedQuery(ProposalFindManyArgs)
   async findManyProposals(
