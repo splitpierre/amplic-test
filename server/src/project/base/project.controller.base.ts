@@ -20,7 +20,7 @@ import { plainToClass } from "class-transformer";
 import { ApiNestedQuery } from "../../decorators/api-nested-query.decorator";
 import { ProjectService } from "../project.service";
 import { AclValidateRequestInterceptor } from "../../interceptors/aclValidateRequest.interceptor";
-import { AclFilterResponseInterceptor } from "../../interceptors/aclFilterResponse.interceptor";
+import { Public } from "../../decorators/public.decorator";
 import { ProjectCreateInput } from "./ProjectCreateInput";
 import { ProjectWhereInput } from "./ProjectWhereInput";
 import { ProjectWhereUniqueInput } from "./ProjectWhereUniqueInput";
@@ -64,12 +64,7 @@ export class ProjectControllerBase {
     });
   }
 
-  @common.UseInterceptors(AclFilterResponseInterceptor)
-  @nestAccessControl.UseRoles({
-    resource: "Project",
-    action: "read",
-    possession: "any",
-  })
+  @Public()
   @common.Get()
   @swagger.ApiOkResponse({ type: [Project] })
   @swagger.ApiForbiddenResponse()
@@ -89,12 +84,7 @@ export class ProjectControllerBase {
     });
   }
 
-  @common.UseInterceptors(AclFilterResponseInterceptor)
-  @nestAccessControl.UseRoles({
-    resource: "Project",
-    action: "read",
-    possession: "own",
-  })
+  @Public()
   @common.Get("/:id")
   @swagger.ApiOkResponse({ type: Project })
   @swagger.ApiNotFoundResponse({ type: errors.NotFoundException })
@@ -192,12 +182,7 @@ export class ProjectControllerBase {
     }
   }
 
-  @common.UseInterceptors(AclFilterResponseInterceptor)
-  @nestAccessControl.UseRoles({
-    resource: "Category",
-    action: "read",
-    possession: "any",
-  })
+  @Public()
   @common.Get("/:id/categories")
   @ApiNestedQuery(CategoryFindManyArgs)
   async findManyCategories(
@@ -289,12 +274,7 @@ export class ProjectControllerBase {
     });
   }
 
-  @common.UseInterceptors(AclFilterResponseInterceptor)
-  @nestAccessControl.UseRoles({
-    resource: "Proposal",
-    action: "read",
-    possession: "any",
-  })
+  @Public()
   @common.Get("/:id/proposals")
   @ApiNestedQuery(ProposalFindManyArgs)
   async findManyProposals(

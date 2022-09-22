@@ -12,47 +12,47 @@ const nonExistingId = "nonExistingId";
 const existingId = "existingId";
 const CREATE_INPUT = {
   address: "exampleAddress",
+  apiKey: "exampleApiKey",
   createdAt: new Date(),
   firstName: "exampleFirstName",
   id: "exampleId",
   lastName: "exampleLastName",
   password: "examplePassword",
-  roles: ["exampleRoles"],
   updatedAt: new Date(),
   username: "exampleUsername",
 };
 const CREATE_RESULT = {
   address: "exampleAddress",
+  apiKey: "exampleApiKey",
   createdAt: new Date(),
   firstName: "exampleFirstName",
   id: "exampleId",
   lastName: "exampleLastName",
   password: "examplePassword",
-  roles: ["exampleRoles"],
   updatedAt: new Date(),
   username: "exampleUsername",
 };
 const FIND_MANY_RESULT = [
   {
     address: "exampleAddress",
+    apiKey: "exampleApiKey",
     createdAt: new Date(),
     firstName: "exampleFirstName",
     id: "exampleId",
     lastName: "exampleLastName",
     password: "examplePassword",
-    roles: ["exampleRoles"],
     updatedAt: new Date(),
     username: "exampleUsername",
   },
 ];
 const FIND_ONE_RESULT = {
   address: "exampleAddress",
+  apiKey: "exampleApiKey",
   createdAt: new Date(),
   firstName: "exampleFirstName",
   id: "exampleId",
   lastName: "exampleLastName",
   password: "examplePassword",
-  roles: ["exampleRoles"],
   updatedAt: new Date(),
   username: "exampleUsername",
 };

@@ -1,23 +1,5 @@
 [
   {
-    "role": "user",
-    "resource": "User",
-    "action": "read:own",
-    "attributes": "*"
-  },
-  {
-    "role": "voter",
-    "resource": "User",
-    "action": "read:own",
-    "attributes": "*"
-  },
-  {
-    "role": "admin",
-    "resource": "User",
-    "action": "read:own",
-    "attributes": "*"
-  },
-  {
     "role": "admin",
     "resource": "User",
     "action": "create:any",
@@ -36,42 +18,6 @@
     "attributes": "*"
   },
   {
-    "role": "user",
-    "resource": "User",
-    "action": "read:any",
-    "attributes": "*"
-  },
-  {
-    "role": "voter",
-    "resource": "User",
-    "action": "read:any",
-    "attributes": "*"
-  },
-  {
-    "role": "admin",
-    "resource": "User",
-    "action": "read:any",
-    "attributes": "*"
-  },
-  {
-    "role": "user",
-    "resource": "Project",
-    "action": "read:own",
-    "attributes": "*"
-  },
-  {
-    "role": "voter",
-    "resource": "Project",
-    "action": "read:own",
-    "attributes": "*"
-  },
-  {
-    "role": "admin",
-    "resource": "Project",
-    "action": "read:own",
-    "attributes": "*"
-  },
-  {
     "role": "admin",
     "resource": "Project",
     "action": "create:any",
@@ -87,42 +33,6 @@
     "role": "admin",
     "resource": "Project",
     "action": "delete:any",
-    "attributes": "*"
-  },
-  {
-    "role": "user",
-    "resource": "Project",
-    "action": "read:any",
-    "attributes": "*"
-  },
-  {
-    "role": "voter",
-    "resource": "Project",
-    "action": "read:any",
-    "attributes": "*"
-  },
-  {
-    "role": "admin",
-    "resource": "Project",
-    "action": "read:any",
-    "attributes": "*"
-  },
-  {
-    "role": "user",
-    "resource": "Proposal",
-    "action": "read:own",
-    "attributes": "*"
-  },
-  {
-    "role": "voter",
-    "resource": "Proposal",
-    "action": "read:own",
-    "attributes": "*"
-  },
-  {
-    "role": "admin",
-    "resource": "Proposal",
-    "action": "read:own",
     "attributes": "*"
   },
   {
@@ -156,42 +66,6 @@
     "attributes": "*"
   },
   {
-    "role": "user",
-    "resource": "Proposal",
-    "action": "read:any",
-    "attributes": "*"
-  },
-  {
-    "role": "voter",
-    "resource": "Proposal",
-    "action": "read:any",
-    "attributes": "*"
-  },
-  {
-    "role": "admin",
-    "resource": "Proposal",
-    "action": "read:any",
-    "attributes": "*"
-  },
-  {
-    "role": "user",
-    "resource": "Category",
-    "action": "read:own",
-    "attributes": "*"
-  },
-  {
-    "role": "voter",
-    "resource": "Category",
-    "action": "read:own",
-    "attributes": "*"
-  },
-  {
-    "role": "admin",
-    "resource": "Category",
-    "action": "read:own",
-    "attributes": "*"
-  },
-  {
     "role": "admin",
     "resource": "Category",
     "action": "create:any",
@@ -216,27 +90,15 @@
     "attributes": "*"
   },
   {
-    "role": "admin",
+    "role": "api",
     "resource": "Category",
     "action": "delete:any",
     "attributes": "*"
   },
   {
-    "role": "user",
-    "resource": "Category",
-    "action": "read:any",
-    "attributes": "*"
-  },
-  {
-    "role": "voter",
-    "resource": "Category",
-    "action": "read:any",
-    "attributes": "*"
-  },
-  {
     "role": "admin",
     "resource": "Category",
-    "action": "read:any",
+    "action": "delete:any",
     "attributes": "*"
   }
 ]

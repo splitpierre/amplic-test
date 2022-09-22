@@ -20,7 +20,7 @@ import { plainToClass } from "class-transformer";
 import { ApiNestedQuery } from "../../decorators/api-nested-query.decorator";
 import { ProposalService } from "../proposal.service";
 import { AclValidateRequestInterceptor } from "../../interceptors/aclValidateRequest.interceptor";
-import { AclFilterResponseInterceptor } from "../../interceptors/aclFilterResponse.interceptor";
+import { Public } from "../../decorators/public.decorator";
 import { ProposalCreateInput } from "./ProposalCreateInput";
 import { ProposalWhereInput } from "./ProposalWhereInput";
 import { ProposalWhereUniqueInput } from "./ProposalWhereUniqueInput";
@@ -84,12 +84,7 @@ export class ProposalControllerBase {
     });
   }
 
-  @common.UseInterceptors(AclFilterResponseInterceptor)
-  @nestAccessControl.UseRoles({
-    resource: "Proposal",
-    action: "read",
-    possession: "any",
-  })
+  @Public()
   @common.Get()
   @swagger.ApiOkResponse({ type: [Proposal] })
   @swagger.ApiForbiddenResponse()
@@ -123,12 +118,7 @@ export class ProposalControllerBase {
     });
   }
 
-  @common.UseInterceptors(AclFilterResponseInterceptor)
-  @nestAccessControl.UseRoles({
-    resource: "Proposal",
-    action: "read",
-    possession: "own",
-  })
+  @Public()
   @common.Get("/:id")
   @swagger.ApiOkResponse({ type: Proposal })
   @swagger.ApiNotFoundResponse({ type: errors.NotFoundException })
